@@ -1,0 +1,98 @@
+{
+  "classes": [
+    "N",
+    "S",
+    "V",
+    "F",
+    "Q"
+  ],
+  "inter_patient": {
+    "per_class": {
+      "N": {
+        "sensitivity": 0.9955,
+        "ppv": 0.9854,
+        "f1": 0.9904,
+        "support": 2237
+      },
+      "S": {
+        "sensitivity": 0.0,
+        "ppv": 0.0,
+        "f1": 0.0,
+        "support": 33
+      },
+      "V": {
+        "sensitivity": 1.0,
+        "ppv": 0.0909,
+        "f1": 0.1667,
+        "support": 1
+      },
+      "F": {
+        "sensitivity": 0.0,
+        "ppv": 0.0,
+        "f1": 0.0,
+        "support": 0
+      },
+      "Q": {
+        "sensitivity": 0.0,
+        "ppv": 0.0,
+        "f1": 0.0,
+        "support": 0
+      }
+    },
+    "macro_f1": 0.2314,
+    "accuracy": 0.9811,
+    "confusion_matrix": [
+      [
+        2227,
+        0,
+        10,
+        0,
+        0
+      ],
+      [
+        33,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "intra_patient": null,
+  "dataset": {
+    "name": "MIT-BIH Arrhythmia Database",
+    "excluded_records": [
+      102,
+      104,
+      107,
+      217
+    ]
+  },
+  "model": {
+    "name": "CardioNet (1D ResNet + RR features)",
+    "params": 498453,
+    "input": "256-sample beat @360 Hz + 4 RR features"
+  },
+  "generated_at": "2026-09-24T17:55:44.328350Z"
+}

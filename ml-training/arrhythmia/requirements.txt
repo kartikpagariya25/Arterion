@@ -1,0 +1,8 @@
+wfdb>=4.2.0
+neurokit2==0.2.10
+scipy>=1.13.1,<1.15
+numpy>=1.26.4,<2.0
+scikit-learn>=1.5.2,<1.6
+onnx==1.17.0
+onnxruntime==1.19.2
+matplotlib>=3.9.2,<3.10
