@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About the Developers — Arterion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Bricolage+Grotesque:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/theme.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  .dev-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px; max-width:1100px; margin:0 auto;}
+  .dev-card{padding:34px 28px; text-align:center;}
+  .dev-photo{width:104px; height:104px; border-radius:50%; object-fit:cover; margin:0 auto 18px; border:3px solid var(--pink-200); box-shadow:0 10px 24px -8px rgba(154,38,53,0.25);}
+  .dev-name{font-size:1.1rem; font-weight:700; margin-bottom:12px;}
+  .dev-quote{color:var(--ink-soft); font-size:.88rem; line-height:1.7; font-style:italic; margin-bottom:20px; min-height:80px;}
+  .dev-links{display:flex; gap:12px; justify-content:center;}
+  .dev-link{width:38px; height:38px; border-radius:50%; background:var(--blush-50); color:var(--wine-800); display:flex; align-items:center; justify-content:center; font-size:1rem; transition:all .2s ease;}
+  .dev-link:hover{background:var(--maroon-600); color:#fff; transform:translateY(-3px);}
+  .mentor-wrap{max-width:420px; margin:40px auto 0;}
+  .mentor-card{border:2px solid var(--maroon-600); box-shadow:0 14px 32px -10px rgba(154,38,53,0.35); position:relative;}
+  .mentor-tag{position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:var(--maroon-600); color:#fff; font-size:.68rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:5px 16px; border-radius:99px;}
+  .dev-photo-placeholder{width:104px; height:104px; border-radius:50%; margin:0 auto 18px; border:3px solid var(--pink-200); background:var(--blush-50); color:var(--maroon-600); display:flex; align-items:center; justify-content:center; font-size:2.2rem;}
+  .mentor-role{color:var(--wine-700); font-size:.82rem; font-weight:600; margin-bottom:14px;}
+  @media (max-width:900px){.dev-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <section class="top-card">
+    <div id="nav-mount"></div>
+    <div class="page-title-block">
+      <h1 class="reveal">The Team Behind Arterion</h1>
+      <p class="reveal">Built for the Synapse Hackathon &mdash; AI in Healthcare track, Symbiosis Pune.</p>
+    </div>
+  </section>
+</div>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="dev-grid">
+      <div class="card card-hover dev-card reveal">
+        <img class="dev-photo" src="https://media.licdn.com/dms/image/v2/D4D03AQESIR9c5L1XLA/profile-displayphoto-scale_200_200/B4DZ8E_5OrGwAg-/0/1782495287789?e=1792022400&v=beta&t=k2ObcqZ-wtE7p0Q1rQXH1lUGO6mKDENxabvTZ_5OCIs" alt="Vikrant K. Kadam">
+        <div class="dev-name">Vikrant K. Kadam</div>
+        <p class="dev-quote">&ldquo;A missed blockage costs more than a false alarm ever could &mdash; that asymmetry is what shaped every threshold we tuned in Arterion.&rdquo;</p>
+        <div class="dev-links">
+          <a class="dev-link" href="https://linkedin.com/in/vikrantkadam028/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a class="dev-link" href="https://github.com/VikrantKadam028" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+
+      <div class="card card-hover dev-card reveal">
+        <img class="dev-photo" src="https://media.licdn.com/dms/image/v2/D4E03AQHfIoFibBhVIA/profile-displayphoto-scale_200_200/B4EZqwcW3eKUAY-/0/1763896816362?e=1792022400&v=beta&t=5oDnbdHzO-nSnEI_8urugnPUWmvgeSJRkD64dt6Vojs" alt="Kartik Pagariya">
+        <div class="dev-name">Kartik Pagariya</div>
+        <p class="dev-quote">&ldquo;A model's output means nothing to a doctor until they can see why it said what it said &mdash; explainability isn't a feature here, it's the whole point.&rdquo;</p>
+        <div class="dev-links">
+          <a class="dev-link" href="https://www.linkedin.com/in/kartikpagariya1911/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a class="dev-link" href="https://github.com/kartikpagariya25" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+
+      <div class="card card-hover dev-card reveal">
+        <img class="dev-photo" src="https://media.licdn.com/dms/image/v2/D4D03AQEn0yj5zoQwHg/profile-displayphoto-scale_200_200/B4DZjHJmYJH0Ac-/0/1755687840955?e=1792022400&v=beta&t=-XEg6Ph9j1RXN6e5EKdV7GCA9X9EKaswMJFh9YrzKp8" alt="Aditya Dengale">
+        <div class="dev-name">Aditya Dengale</div>
+        <p class="dev-quote">&ldquo;Every severity score we show a patient carries real weight &mdash; building this meant treating accuracy as a responsibility, not just a metric.&rdquo;</p>
+        <div class="dev-links">
+          <a class="dev-link" href="https://www.linkedin.com/in/adityadengale/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a class="dev-link" href="https://github.com/DevXDividends" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mentor-wrap">
+      <div class="card card-hover dev-card mentor-card reveal">
+        <span class="mentor-tag"><i class="fa-solid fa-star"></i> Project Mentor</span>
+        <div class="dev-photo-placeholder"><i class="fa-solid fa-user-doctor"></i></div>
+        <div class="dev-name">Dr. Prerna V. Karnavat</div>
+        <div class="mentor-role">AIIMS, Jodhpur</div>
+        <p class="dev-quote" style="min-height:auto;">Guided the clinical direction of Arterion &mdash; helping us understand what a real screening report needs to say, and to whom.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div id="footer-mount"></div></footer>
+<div id="emergency-mount"></div>
+<script src="js/auth.js"></script>
+<script src="js/common.js"></script>
+</body>
+</html>

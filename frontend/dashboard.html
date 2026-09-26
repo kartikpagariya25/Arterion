@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Arterion</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Bricolage+Grotesque:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/theme.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+  body{background:var(--blush-50);}
+
+  .dash-shell{display:flex; min-height:100vh;}
+
+  /* ===== sidebar ===== */
+  .dash-sidebar{
+    width:264px; flex-shrink:0; background:linear-gradient(180deg, var(--wine-950) 0%, var(--wine-800) 100%);
+    color:#fff; display:flex; flex-direction:column; position:sticky; top:0; height:100vh; z-index:100;
+  }
+  .dash-logo{display:flex; align-items:center; gap:12px; padding:26px 24px 20px;}
+  .dash-logo-icon{width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:1.15rem; color:var(--pink-200); flex-shrink:0;}
+  .dash-logo-name{font-family:'Bricolage Grotesque', sans-serif; font-weight:800; font-size:1.15rem;}
+
+  .dash-user{padding:0 24px 22px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:14px;}
+  .dash-user-name{font-weight:700; font-size:.95rem; margin-bottom:4px;}
+  .dash-user-role{font-size:.72rem; background:rgba(255,255,255,0.14); display:inline-block; padding:3px 10px; border-radius:99px; text-transform:uppercase; letter-spacing:.03em; font-weight:700;}
+
+  .dash-nav{flex:1; padding:0 14px; overflow-y:auto;}
+  .dash-nav-item{
+    display:flex; align-items:center; gap:13px; padding:12px 14px; border-radius:12px; margin-bottom:4px;
+    color:rgba(255,255,255,0.72); font-weight:600; font-size:.9rem; cursor:pointer; transition:all .2s ease; position:relative;
+  }
+  .dash-nav-item i{width:18px; text-align:center; font-size:1rem;}
+  .dash-nav-item:hover{background:rgba(255,255,255,0.08); color:#fff;}
+  .dash-nav-item.active{background:rgba(255,255,255,0.16); color:#fff;}
+  .dash-nav-item.active::before{content:''; position:absolute; left:-14px; top:8px; bottom:8px; width:4px; background:var(--pink-200); border-radius:0 4px 4px 0;}
+  .dash-nav-badge{margin-left:auto; background:var(--red-500); color:#fff; font-size:.68rem; font-weight:700; padding:1px 7px; border-radius:99px; min-width:18px; text-align:center;}
+
+  .dash-nav-footer{padding:16px 24px 22px; border-top:1px solid rgba(255,255,255,0.1);}
+  .dash-logout{display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.75); font-weight:600; font-size:.86rem; cursor:pointer; transition:color .2s ease;}
+  .dash-logout:hover{color:#fff;}
+  .dash-home-link{display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.55); font-weight:600; font-size:.8rem; margin-bottom:14px; transition:color .2s ease;}
+  .dash-home-link:hover{color:#fff;}
+
+  /* ===== main area ===== */
+  .dash-main{flex:1; min-width:0; padding:32px 40px 60px;}
+  .dash-topbar{display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; flex-wrap:wrap; gap:14px;}
+  .dash-title{font-family:'Bricolage Grotesque', sans-serif; font-weight:800; font-size:1.7rem; color:var(--ink);}
+  .dash-subtitle{color:var(--ink-soft); font-size:.9rem; margin-top:4px;}
+  .dash-mobile-toggle{display:none; background:#fff; border:1px solid var(--pink-200); border-radius:10px; width:40px; height:40px; font-size:1.1rem; color:var(--wine-800); cursor:pointer;}
+
+  .dash-panel{display:none;}
+  .dash-panel.active{display:block;}
+
+  /* stat cards */
+  .stat-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:20px; margin-bottom:32px;}
+  .stat-card{background:#fff; border-radius:16px; padding:22px 24px; border:1px solid var(--pink-100);}
+  .stat-card .stat-icon{width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; margin-bottom:14px;}
+  .stat-icon.blue{background:#e7f0fd; color:#2563eb;}
+  .stat-icon.green{background:#e4f7ec; color:var(--green-ok);}
+  .stat-icon.amber{background:#fdf1de; color:var(--amber-warn);}
+  .stat-icon.red{background:#fbe3e3; color:var(--red-500);}
+  .stat-value{font-family:'Bricolage Grotesque', sans-serif; font-weight:800; font-size:1.7rem; color:var(--ink);}
+  .stat-label{color:var(--ink-soft); font-size:.85rem; margin-top:2px;}
+
+  .empty-state{text-align:center; padding:60px 20px; color:var(--ink-soft);}
+  .empty-state i{font-size:2.2rem; color:var(--pink-300); margin-bottom:14px; display:block;}
+
+  /* history grid */
+  .history-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:20px;}
+  .history-card{background:#fff; border-radius:16px; overflow:hidden; border:1px solid var(--pink-100); cursor:pointer; transition:all .2s ease;}
+  .history-card:hover{transform:translateY(-3px); box-shadow:0 14px 30px rgba(101,21,34,0.12);}
+  .history-card img{width:100%; height:150px; object-fit:cover; display:block; background:var(--blush-50);}
+  .history-card-body{padding:14px 16px;}
+  .history-date{font-size:.75rem; color:var(--ink-soft); margin-bottom:6px;}
+  .history-summary{font-size:.85rem; color:var(--ink); line-height:1.5; margin-bottom:8px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+
+  /* table (my patients) */
+  .patients-table{width:100%; border-collapse:collapse; background:#fff; border-radius:16px; overflow:hidden; border:1px solid var(--pink-100);}
+  .patients-table th{text-align:left; font-size:.78rem; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); padding:14px 18px; background:var(--blush-50); font-weight:700;}
+  .patients-table td{padding:14px 18px; font-size:.88rem; border-top:1px solid var(--pink-100);}
+  .patients-table tr:hover td{background:#fffafb;}
+
+  /* profile / settings forms */
+  .form-card{background:#fff; border-radius:18px; padding:32px; border:1px solid var(--pink-100); max-width:560px;}
+  .form-row{margin-bottom:18px;}
+  .form-row label{display:block; font-size:.82rem; font-weight:700; color:var(--ink); margin-bottom:7px;}
+  .form-row input, .form-row select{width:100%; padding:11px 14px; border-radius:10px; border:1.5px solid var(--pink-200); font-family:inherit; font-size:.9rem; background:#fff;}
+  .form-row input:focus, .form-row select:focus{outline:none; border-color:var(--maroon-600);}
+  .form-msg{font-size:.85rem; margin-top:12px; display:none; padding:10px 14px; border-radius:10px;}
+  .form-msg.success{display:block; background:#e4f7ec; color:var(--green-ok);}
+  .form-msg.error{display:block; background:#fbe3e3; color:var(--red-500);}
+
+  /* notifications */
+  .notif-item{display:flex; gap:14px; background:#fff; border:1px solid var(--pink-100); border-radius:14px; padding:16px 18px; margin-bottom:12px; align-items:flex-start;}
+  .notif-icon{width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.9rem;}
+  .notif-text{font-size:.88rem; color:var(--ink); line-height:1.5;}
+  .notif-time{font-size:.76rem; color:var(--ink-soft); margin-top:4px;}
+
+  /* reuse scan.html markup inside New Scan panel */
+  .scan-shell{max-width:960px;}
+  .upload-zone{border:2px dashed var(--pink-300); border-radius:var(--radius); background:#fff; padding:56px 32px; text-align:center; cursor:pointer; transition:all .25s ease;}
+  .upload-zone.dragover{border-color:var(--maroon-600); background:var(--blush-50);}
+  .upload-zone i{font-size:2.6rem; color:var(--maroon-600); margin-bottom:16px;}
+  .upload-zone h3{font-size:1.15rem; font-weight:700; margin-bottom:8px;}
+  .upload-zone p{color:var(--ink-soft); font-size:.9rem;}
+  .upload-zone input{display:none;}
+  .preview-wrap{display:none; margin-top:24px; text-align:center;}
+  .preview-wrap img{max-width:100%; max-height:420px; border-radius:14px; margin:0 auto 20px; box-shadow:0 10px 30px rgba(101,21,34,0.15);}
+  .scan-actions{display:flex; gap:14px; justify-content:center; margin-top:20px; flex-wrap:wrap;}
+  .loading-overlay{display:none; position:fixed; inset:0; z-index:2000; background:linear-gradient(160deg, var(--wine-950) 0%, var(--wine-800) 60%, var(--maroon-600) 100%); align-items:center; justify-content:center; flex-direction:column; color:#fff; text-align:center; padding:30px;}
+  .loading-overlay.active{display:flex;}
+  .loading-heart{width:120px; height:120px; margin-bottom:32px; filter:drop-shadow(0 20px 40px rgba(0,0,0,0.4));}
+  .loading-title{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:1.5rem; margin-bottom:14px; text-transform:uppercase; letter-spacing:.02em;}
+  .loading-line{font-size:1rem; color:rgba(255,255,255,0.82); max-width:520px; min-height:52px; line-height:1.6; font-style:italic;}
+  .loading-bar{width:220px; height:4px; background:rgba(255,255,255,0.15); border-radius:99px; margin-top:28px; overflow:hidden;}
+  .loading-bar-fill{height:100%; width:30%; background:linear-gradient(90deg, var(--rose-400), var(--pink-200)); border-radius:99px; animation:barSlide 1.3s ease-in-out infinite;}
+  @keyframes barSlide{0%{transform:translateX(-100%);} 100%{transform:translateX(400%);}}
+  .results{display:none; margin-top:40px;}
+  .viewer-mode-banner{display:flex; align-items:center; gap:12px; padding:14px 20px; border-radius:14px; margin-bottom:24px; font-weight:600; font-size:.9rem;}
+  .viewer-mode-banner.mode-doctor{background:linear-gradient(135deg, var(--wine-800), var(--maroon-600)); color:#fff;}
+  .viewer-mode-banner.mode-patient{background:var(--blush-50); color:var(--wine-800); border:1.5px solid var(--pink-200);}
+  .compare-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:28px;}
+  .compare-pane{position:relative;}
+  .compare-pane img{width:100%; border-radius:16px; box-shadow:0 12px 34px rgba(101,21,34,0.16); display:block;}
+  .compare-label{position:absolute; top:10px; left:10px; background:rgba(20,20,20,0.72); color:#fff; font-size:.72rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; padding:5px 12px; border-radius:99px; z-index:2;}
+  .result-grid{display:grid; grid-template-columns:1fr; gap:28px; margin-bottom:32px;}
+  .result-summary-card{padding:28px;}
+  .lesion-row{display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--pink-100); font-size:.92rem;}
+  .lesion-row:last-child{border-bottom:none;}
+  .severity-tag{padding:3px 12px; border-radius:99px; font-size:.75rem; font-weight:700; text-transform:uppercase;}
+  .sev-mild{background:#e4f7ec; color:var(--green-ok);}
+  .sev-moderate{background:#fdf1de; color:var(--amber-warn);}
+  .sev-severe{background:#fbe3e3; color:var(--red-500);}
+  .confidence-tag{font-size:.75rem; font-weight:700; color:var(--wine-700); margin-left:8px;}
+  .lang-tabs{display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;}
+  .lang-tab{padding:9px 20px; border-radius:99px; background:#fff; border:1px solid var(--pink-200); font-weight:600; font-size:.86rem; cursor:pointer; color:var(--ink-soft); transition:all .2s ease;}
+  .lang-tab.active{background:var(--wine-800); color:#fff; border-color:var(--wine-800);}
+  .report-card{padding:32px; margin-bottom:24px;}
+  .report-card h4{font-size:1rem; font-weight:700; margin-bottom:10px; color:var(--wine-800);}
+  .report-card p{color:var(--ink-soft); line-height:1.75; font-size:.95rem; margin-bottom:14px;}
+  .report-card ul{padding-left:0;}
+  .report-card ul li{position:relative; padding-left:22px; margin-bottom:10px; font-size:.92rem; color:var(--ink-soft); line-height:1.6;}
+  .report-card ul li::before{content:'\f00c'; font-family:'Font Awesome 6 Free'; font-weight:900; position:absolute; left:0; top:2px; color:var(--green-ok); font-size:.78rem;}
+  .disclaimer-box{background:var(--blush-50); border:1px solid var(--pink-200); border-radius:14px; padding:18px 22px; font-size:.86rem; color:var(--wine-800); display:flex; gap:12px; align-items:flex-start;}
+  .doctor-toggle{display:flex; align-items:center; gap:10px; margin-bottom:20px; cursor:pointer; user-select:none; font-weight:600; font-size:.9rem; color:var(--wine-800);}
+  .doctor-toggle i{transition:transform .25s ease;}
+  .doctor-toggle.open i{transform:rotate(180deg);}
+  .doctor-panel{display:none;}
+  .doctor-panel.open{display:block;}
+  .explain-steps{display:flex; flex-direction:column; gap:18px; margin-bottom:18px;}
+  .explain-step{display:flex; gap:16px; align-items:flex-start;}
+  .explain-num{min-width:32px; height:32px; border-radius:50%; background:var(--blush-50); color:var(--wine-800); font-weight:700; font-size:.85rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .explain-step h5{font-size:.95rem; font-weight:700; margin-bottom:4px;}
+  .explain-step p{font-size:.87rem; color:var(--ink-soft); line-height:1.65;}
+  .explain-footnote{font-size:.82rem; color:var(--ink-soft); border-top:1px solid var(--pink-200); padding-top:14px; line-height:1.6;}
+  .error-box{display:none; background:#fdeaea; border:1px solid #f0b8b8; color:#9a2626; padding:16px 20px; border-radius:12px; margin-top:20px; font-size:.9rem;}
+
+  @media (max-width:900px){
+    .result-grid{grid-template-columns:1fr;}
+    .compare-grid{grid-template-columns:1fr;}
+  }
+  @media print{
+    .dash-sidebar, .dash-topbar, .no-print, #explainToggle, .lang-tabs, #doctorToggle{display:none !important;}
+    body{background:#fff !important;}
+    .dash-main{padding:0 !important;}
+    .doctor-panel, #explainPanel{display:block !important;}
+    .card, .form-card{box-shadow:none !important; border:1px solid #ddd !important;}
+    .compare-grid{grid-template-columns:1fr 1fr !important;}
+  }
+
+  @media (max-width:960px){
+    .dash-sidebar{position:fixed; left:0; top:0; height:100vh; transform:translateX(-100%); transition:transform .3s ease; width:260px;}
+    .dash-sidebar.open{transform:translateX(0);}
+    .dash-mobile-toggle{display:block;}
+    .dash-main{padding:24px 18px 50px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="dash-shell">
+  <aside class="dash-sidebar" id="dashSidebar">
+    <div class="dash-logo">
+      <span class="dash-logo-icon"><i class="fa-solid fa-heart-pulse"></i></span>
+      <span class="dash-logo-name">Arterion</span>
+    </div>
+
+    <div class="dash-user">
+      <div class="dash-user-name" id="sidebarUserName">&nbsp;</div>
+      <span class="dash-user-role" id="sidebarUserRole">&nbsp;</span>
+    </div>
+
+    <nav class="dash-nav" id="dashNav">
+      <div class="dash-nav-item active" data-panel="overview"><i class="fa-solid fa-gauge-high"></i> Overview</div>
+      <div class="dash-nav-item" data-panel="newscan"><i class="fa-solid fa-cloud-arrow-up"></i> New Scan</div>
+      <div class="dash-nav-item" data-panel="history"><i class="fa-solid fa-clock-rotate-left"></i> History</div>
+      <div class="dash-nav-item" data-panel="secondary" id="secondaryNavItem"><i class="fa-solid fa-user-group"></i> <span id="secondaryNavLabel">My Patients</span></div>
+      <div class="dash-nav-item" data-panel="notifications"><i class="fa-solid fa-bell"></i> Notifications <span class="dash-nav-badge" id="notifBadge" style="display:none;">0</span></div>
+      <div class="dash-nav-item" data-panel="settings"><i class="fa-solid fa-gear"></i> Settings</div>
+    </nav>
+
+    <div class="dash-nav-footer">
+      <a href="index.html" class="dash-home-link"><i class="fa-solid fa-arrow-left"></i> Back to site</a>
+      <div class="dash-logout" id="dashLogout"><i class="fa-solid fa-right-from-bracket"></i> Log Out</div>
+    </div>
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div>
+        <button class="dash-mobile-toggle" id="mobileToggle"><i class="fa-solid fa-bars"></i></button>
+        <div class="dash-title" id="pageTitle">Overview</div>
+        <div class="dash-subtitle" id="pageSubtitle">Welcome back to Arterion.</div>
+      </div>
+    </div>
+
+    <!-- ===== OVERVIEW ===== -->
+    <div class="dash-panel active" id="panel-overview">
+      <div class="stat-grid" id="overviewStats"></div>
+      <div class="card" style="padding:28px;">
+        <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:16px;"><i class="fa-solid fa-clock-rotate-left"></i> Recent Scans</h3>
+        <div id="overviewRecent"></div>
+      </div>
+    </div>
+
+    <!-- ===== NEW SCAN ===== -->
+    <div class="dash-panel" id="panel-newscan">
+      <div class="container scan-shell" style="padding:0;">
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="fileInput" accept="image/*">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <h3>Click to upload or drag &amp; drop</h3>
+          <p>Supports PNG, JPG &mdash; coronary angiogram images</p>
+        </div>
+
+        <div class="preview-wrap" id="previewWrap">
+          <img id="previewImg" alt="Preview">
+          <div class="scan-actions">
+            <button class="btn btn-solid" id="analyzeBtn"><i class="fa-solid fa-magnifying-glass"></i> Analyze Scan</button>
+            <button class="btn btn-outline" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> Choose Different Image</button>
+          </div>
+        </div>
+
+        <div class="error-box" id="errorBox"></div>
+
+        <div class="results" id="resultsSection">
+          <div class="sec-head" style="margin-bottom:20px; text-align:left;">
+            <div class="badge-pill"><span class="live-dot"></span> Analysis Complete</div>
+            <h2 style="font-size:1.6rem;">Here's What We Found</h2>
+          </div>
+
+          <div class="viewer-mode-banner" id="viewerModeBanner" style="display:none;"></div>
+
+          <div class="compare-grid">
+            <div class="compare-pane">
+              <span class="compare-label">Original</span>
+              <img id="originalImg" alt="Original angiogram">
+            </div>
+            <div class="compare-pane">
+              <span class="compare-label">AI Annotated</span>
+              <img id="overlayImg" alt="Annotated overlay">
+            </div>
+          </div>
+
+          <div class="result-grid">
+            <div class="card result-summary-card" style="grid-column:1 / -1;">
+              <h3><i class="fa-solid fa-chart-simple"></i> Detection Summary</h3>
+              <p id="summaryText" style="color:var(--ink-soft); font-size:.92rem; line-height:1.7; margin-bottom:16px;"></p>
+              <div id="lesionList"></div>
+            </div>
+          </div>
+
+          <div class="card report-card" id="explainCard">
+            <div class="doctor-toggle" id="explainToggle">
+              <i class="fa-solid fa-chevron-down"></i> <span><i class="fa-solid fa-diagram-project"></i> How Was This Diagnosed?</span>
+            </div>
+            <div class="doctor-panel" id="explainPanel">
+              <div class="explain-steps">
+                <div class="explain-step"><div class="explain-num">1</div><div><h5>Image Preprocessing</h5><p>Your angiogram is resized and normalized to match the format the AI models were trained on.</p></div></div>
+                <div class="explain-step"><div class="explain-num">2</div><div><h5>Vessel Segmentation</h5><p>A U-Net neural network (ResNet34 backbone) traces the coronary vessel tree pixel-by-pixel.</p></div></div>
+                <div class="explain-step"><div class="explain-num">3</div><div><h5>Stenosis Segmentation</h5><p>A second, separately trained U-Net identifies regions where the vessel appears abnormally narrow.</p></div></div>
+                <div class="explain-step"><div class="explain-num">4</div><div><h5>Lesion Extraction</h5><p>Detected narrow regions are grouped into distinct lesions using contour detection.</p></div></div>
+                <div class="explain-step"><div class="explain-num">5</div><div><h5>Severity &amp; Confidence Scoring</h5><p>Each lesion's width is compared against normal vessel width nearby to score severity, alongside a model confidence figure reflecting agreement across test-time augmentation passes.</p></div></div>
+              </div>
+              <p class="explain-footnote"><i class="fa-solid fa-circle-info"></i> Both models were trained and evaluated on the ARCADE coronary angiography dataset. This is a screening aid, not a diagnostic device.</p>
+            </div>
+          </div>
+
+          <div class="lang-tabs">
+            <div class="lang-tab active" data-lang="english">English</div>
+            <div class="lang-tab" data-lang="hindi">हिंदी</div>
+            <div class="lang-tab" data-lang="marathi">मराठी</div>
+          </div>
+
+          <div class="card report-card">
+            <h4><i class="fa-solid fa-user"></i> For You (Patient Report)</h4>
+            <p id="patientSummary"></p>
+            <p id="patientMeaning" style="font-style:italic;"></p>
+            <h4 style="margin-top:18px;">Suggestions</h4>
+            <ul id="patientSuggestions"></ul>
+          </div>
+
+          <div class="card report-card" id="doctorReportCard">
+            <div class="doctor-toggle" id="doctorToggle">
+              <i class="fa-solid fa-chevron-down"></i> <span>For Doctors &mdash; Clinical Summary</span>
+            </div>
+            <div class="doctor-panel" id="doctorPanel">
+              <h4>Clinical Summary</h4><p id="doctorSummary"></p>
+              <h4>Findings</h4><p id="doctorFindings"></p>
+              <h4>Recommendation</h4><p id="doctorRecommendation"></p>
+            </div>
+          </div>
+
+          <div class="disclaimer-box"><i class="fa-solid fa-circle-info"></i><span id="disclaimerText"></span></div>
+
+          <div class="scan-actions no-print" style="margin-top:28px;">
+            <button class="btn btn-solid" id="downloadPdfBtn"><i class="fa-solid fa-file-pdf"></i> Download Report (PDF)</button>
+            <button class="btn btn-outline" id="scanAnotherBtn"><i class="fa-solid fa-rotate-left"></i> Scan Another Image</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HISTORY ===== -->
+    <div class="dash-panel" id="panel-history">
+      <div class="history-grid" id="historyGrid"></div>
+    </div>
+
+    <!-- ===== SECONDARY: My Patients (doctor) / Profile (patient) ===== -->
+    <div class="dash-panel" id="panel-secondary"></div>
+
+    <!-- ===== NOTIFICATIONS ===== -->
+    <div class="dash-panel" id="panel-notifications">
+      <div id="notifList"></div>
+    </div>
+
+    <!-- ===== SETTINGS ===== -->
+    <div class="dash-panel" id="panel-settings">
+      <div class="form-card">
+        <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:20px;"><i class="fa-solid fa-lock"></i> Change Password</h3>
+        <form id="passwordForm">
+          <div class="form-row"><label>Current Password</label><input type="password" id="currentPassword" required></div>
+          <div class="form-row"><label>New Password</label><input type="password" id="newPassword" required minlength="6"></div>
+          <button type="submit" class="btn btn-solid">Update Password</button>
+          <div class="form-msg" id="passwordMsg"></div>
+        </form>
+      </div>
+
+      <div class="form-card" style="margin-top:28px;">
+        <h3 style="font-size:1.05rem; font-weight:700; margin-bottom:20px;"><i class="fa-solid fa-id-card"></i> Account Info</h3>
+        <div id="accountInfoBox" style="font-size:.9rem; color:var(--ink-soft); line-height:2;"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- History item detail modal -->
+<div id="historyModal" style="display:none; position:fixed; inset:0; z-index:3000; background:rgba(20,10,12,0.6); align-items:center; justify-content:center; padding:20px;">
+  <div class="card" style="max-width:640px; width:100%; max-height:85vh; overflow-y:auto; padding:30px; position:relative;">
+    <button id="historyModalClose" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:1.3rem; cursor:pointer; color:var(--ink-soft);"><i class="fa-solid fa-xmark"></i></button>
+    <div id="historyModalBody"></div>
+  </div>
+</div>
+
+<!-- Loading overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <img src="assets/heart.png" alt="" class="loading-heart" id="loadingHeart">
+  <div class="loading-title">Analyzing Your Scan&hellip;</div>
+  <div class="loading-line" id="loadingLine"></div>
+  <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/scan.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

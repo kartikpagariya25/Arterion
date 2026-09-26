@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Suggestions — Arterion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Bricolage+Grotesque:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/theme.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  .tips-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .tip-card{padding:30px 26px;}
+  .tip-icon{width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:#fff; margin-bottom:18px;}
+  .tip-card h3{font-size:1.05rem; font-weight:700; margin-bottom:10px;}
+  .tip-card p{color:var(--ink-soft); font-size:.9rem; line-height:1.7;}
+  .tip-card ul{margin-top:10px;}
+  .tip-card ul li{position:relative; padding-left:20px; margin-bottom:8px; font-size:.87rem; color:var(--ink-soft); line-height:1.6;}
+  .tip-card ul li::before{content:'\f00c'; font-family:'Font Awesome 6 Free'; font-weight:900; position:absolute; left:0; top:2px; color:var(--green-ok); font-size:.72rem;}
+  @media (max-width:900px){.tips-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:600px){.tips-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <section class="top-card">
+    <div id="nav-mount"></div>
+    <div class="page-title-block">
+      <h1 class="reveal">Heart <span class="gradient-text" style="font-family:'Bricolage Grotesque',sans-serif; text-transform:none; font-weight:700; font-style:italic;">Health Tips</span></h1>
+      <p class="reveal">Simple, everyday habits that support a healthy heart &mdash; because prevention matters as much as detection.</p>
+    </div>
+  </section>
+</div>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="tips-grid">
+      <div class="card card-hover tip-card reveal">
+        <div class="tip-icon" style="background:linear-gradient(135deg,var(--rose-400),var(--wine-700));"><i class="fa-solid fa-utensils"></i></div>
+        <h3>Eat Heart-Smart</h3>
+        <p>Small dietary shifts add up to big protection over time.</p>
+        <ul>
+          <li>Reduce salt, fried food &amp; saturated fat</li>
+          <li>Add more fruits, vegetables &amp; whole grains</li>
+          <li>Choose healthy fats like nuts &amp; olive oil</li>
+        </ul>
+      </div>
+      <div class="card card-hover tip-card reveal">
+        <div class="tip-icon" style="background:linear-gradient(135deg,var(--maroon-600),var(--wine-900));"><i class="fa-solid fa-person-walking"></i></div>
+        <h3>Stay Active Daily</h3>
+        <p>You don't need a gym &mdash; consistency matters more than intensity.</p>
+        <ul>
+          <li>30 minutes of brisk walking, most days</li>
+          <li>Take stairs instead of elevators when possible</li>
+          <li>Stretch and move every hour if you sit for work</li>
+        </ul>
+      </div>
+      <div class="card card-hover tip-card reveal">
+        <div class="tip-icon" style="background:linear-gradient(135deg,var(--red-500),var(--maroon-600));"><i class="fa-solid fa-smoking-ban"></i></div>
+        <h3>Avoid Tobacco &amp; Limit Alcohol</h3>
+        <p>Smoking is one of the single largest controllable risk factors for heart disease.</p>
+        <ul>
+          <li>Quitting smoking rapidly lowers heart risk</li>
+          <li>Limit alcohol to moderate levels</li>
+          <li>Avoid secondhand smoke exposure where possible</li>
+        </ul>
+      </div>
+      <div class="card card-hover tip-card reveal">
+        <div class="tip-icon" style="background:linear-gradient(135deg,var(--wine-700),var(--ink));"><i class="fa-solid fa-gauge-high"></i></div>
+        <h3>Monitor Your Numbers</h3>
+        <p>Blood pressure and cholesterol often show no symptoms until it's serious.</p>
+        <ul>
+          <li>Check blood pressure regularly</li>
+          <li>Get cholesterol &amp; blood sugar tested yearly</li>
+          <li>Track and manage your weight over time</li>
+        </ul>
+      </div>
+      <div class="card card-hover tip-card reveal">
+        <div class="tip-icon" style="background:linear-gradient(135deg,var(--pink-300),var(--red-500));"><i class="fa-solid fa-bed"></i></div>
+        <h3>Sleep &amp; Stress Matter</h3>
+        <p>Chronic stress and poor sleep directly strain your cardiovascular system.</p>
+        <ul>
+          <li>Aim for 7&ndash;8 hours of sleep nightly</li>
+          <li>Practice deep breathing or meditation</li>
+          <li>Take breaks &mdash; don't let stress become chronic</li>
+        </ul>
+      </div>
+      <div class="card card-hover tip-card reveal">
+        <div class="tip-icon" style="background:linear-gradient(135deg,var(--wine-800),var(--red-500));"><i class="fa-solid fa-stethoscope"></i></div>
+        <h3>Routine Check-Ups</h3>
+        <p>Catching risk factors early is far easier than treating advanced disease.</p>
+        <ul>
+          <li>Annual health check-ups after age 30&ndash;40</li>
+          <li>Family history? Screen earlier and more often</li>
+          <li>Don't ignore persistent chest discomfort or fatigue</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div id="footer-mount"></div></footer>
+<div id="emergency-mount"></div>
+<script src="js/auth.js"></script>
+<script src="js/common.js"></script>
+</body>
+</html>

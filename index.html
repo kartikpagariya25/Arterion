@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HeartCare — Take Care of Your Heart Diseases</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=JetBrains+Mono:wght@400;500;600&family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Petit+Formal+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+  :root{
+    /* ===== HeartCare palette — from reference image ===== */
+    --wine-950:#3a0c14;
+    --wine-900:#4c0f1a;
+    --wine-800:#651522;
+    --wine-700:#7e1c2b;
+    --maroon-600:#9a2635;
+    --red-500:#b83b45;
+    --rose-400:#d66b74;
+    --pink-300:#e79aa2;
+    --pink-200:#f0b9bf;
+    --pink-100:#f6d3d8;
+    --blush-50:#fbe9eb;
+    --page-bg:#f4b9c1;
+    --page-bg-2:#eda0aa;
+    --ink:#2b0a10;
+    --ink-soft:#6b3037;
+    --cream:#fff7f6;
+    --radius-xl:40px;
+    --radius:18px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Poppins', sans-serif;
+    background:linear-gradient(160deg, var(--page-bg) 0%, var(--page-bg-2) 100%);
+    color:var(--ink);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .font-serif{font-family:'Playfair Display', serif;}
+  .font-mono{font-family:'JetBrains Mono', monospace;}
+  .font-display{font-family:'Bricolage Grotesque', 'Poppins', sans-serif;}
+  .font-cursive{font-family:'Petit Formal Script', cursive;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+  section{position:relative;}
+  button{font-family:inherit;}
+  .container{
+    width:100%;
+    max-width:1280px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  ::selection{background:var(--rose-400); color:#fff;}
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-track{background:var(--pink-100);}
+  ::-webkit-scrollbar-thumb{background:var(--maroon-600); border-radius:99px;}
+
+  .gradient-text{
+    background:linear-gradient(120deg, var(--rose-400), var(--pink-200));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+
+  /* ===== outer page padding so the hero "card" floats ===== */
+  .page-wrap{padding:22px;}
+
+  /* ===== HERO CARD — matches reference image ===== */
+  .hero-card{
+    position:relative;
+    border-radius:var(--radius-xl);
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 90% 70% at 75% 15%, rgba(216,107,116,0.55) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 60% at 10% 90%, rgba(101,21,34,0.6) 0%, transparent 55%),
+      linear-gradient(150deg, var(--wine-950) 0%, var(--wine-800) 45%, var(--maroon-600) 100%);
+    color:#fff;
+    padding:34px 42px 46px;
+    min-height:92vh;
+    display:flex;
+    flex-direction:column;
+  }
+  .hero-nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-bottom:36px;
+  }
+  .hero-logo{
+    display:flex; align-items:center; gap:12px;
+  }
+  .hero-logo-icon{
+    width:46px; height:46px; border-radius:50%;
+    background:rgba(255,255,255,0.1);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.3rem; color:var(--pink-200);
+    border:1px solid rgba(255,255,255,0.18);
+    flex-shrink:0;
+  }
+  .hero-logo-name{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:800; font-size:1.28rem; color:#fff; letter-spacing:-0.01em;
+  }
+  .hero-nav-links{display:flex; gap:40px;}
+  .hero-nav-links a{font-size:.92rem; font-weight:500; color:rgba(255,255,255,0.82); transition:color .25s ease;}
+  .hero-nav-links a:hover{color:#fff;}
+  .hero-nav-auth{display:flex; align-items:center; gap:22px;}
+  .hero-nav-auth a{font-size:.92rem; font-weight:500; color:rgba(255,255,255,0.82);}
+  .btn-register{
+    background:rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.35);
+    padding:9px 22px; border-radius:100px;
+    color:#fff !important; font-weight:600; font-size:.88rem;
+    transition:all .25s ease;
+  }
+  .btn-register:hover{background:rgba(255,255,255,0.22);}
+  .hero-menu-toggle{display:none; font-size:1.4rem; color:#fff; background:none; border:none; cursor:pointer;}
+
+  .hero-body{
+    flex:1;
+    display:grid;
+    grid-template-columns:1fr 1.15fr;
+    gap:20px;
+    align-items:center;
+  }
+  .hero-copy h1{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:800;
+    text-transform:uppercase;
+    font-size:clamp(2rem, 3.6vw, 3rem);
+    line-height:1.18;
+    letter-spacing:-0.01em;
+    margin-bottom:22px;
+  }
+  .hero-copy h1 .gradient-text{
+    font-family:'Petit Formal Script', cursive;
+    text-transform:none;
+    font-weight:400;
+    font-size:1.3em;
+    display:inline-block;
+    padding-right:.06em;
+  }
+  .hero-copy p.lead{
+    font-size:1rem;
+    line-height:1.75;
+    color:rgba(255,255,255,0.78);
+    max-width:420px;
+    margin-bottom:26px;
+  }
+  .hero-features{margin-bottom:34px; display:flex; flex-direction:column; gap:12px;}
+  .hero-features li{display:flex; align-items:center; gap:12px; font-size:.94rem; color:rgba(255,255,255,0.88); font-weight:500;}
+  .hero-features li i{color:var(--pink-200); font-size:.85rem;}
+  .btn-cta{
+    display:inline-flex; align-items:center; gap:10px;
+    background:rgba(255,255,255,0.14);
+    border:1px solid rgba(255,255,255,0.4);
+    color:#fff; font-weight:600; font-size:.95rem;
+    padding:15px 34px; border-radius:100px;
+    transition:all .3s ease;
+    width:fit-content;
+  }
+  .btn-cta:hover{background:#fff; color:var(--wine-800); transform:translateY(-3px); box-shadow:0 14px 30px -8px rgba(0,0,0,0.35);}
+
+  /* ===== hero heart image + annotation chips ===== */
+  .hero-visual{
+    position:relative;
+    height:620px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .heart-img{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:680px;
+    height:auto;
+    object-fit:contain;
+    filter:drop-shadow(0 30px 50px rgba(0,0,0,0.45));
+    -webkit-user-drag:none;
+    user-select:none;
+    animation:heartFloat 5s ease-in-out infinite;
+  }
+  @keyframes heartFloat{0%,100%{transform:translateY(0);} 50%{transform:translateY(-14px);}}
+  .heart-glow{
+    position:absolute; width:520px; height:520px; border-radius:50%;
+    background:radial-gradient(circle, rgba(240,185,191,0.4) 0%, transparent 70%);
+    filter:blur(6px); z-index:0;
+    animation:heartGlowPulse 3.6s ease-in-out infinite;
+  }
+  @keyframes heartGlowPulse{0%,100%{transform:scale(1); opacity:.8;} 50%{transform:scale(1.1); opacity:1;}}
+
+  .anno-chip{
+    position:absolute;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:14px;
+    padding:11px 16px;
+    font-size:.78rem;
+    max-width:190px;
+    z-index:4;
+  }
+  .anno-chip strong{display:block; font-weight:700; font-size:.82rem; margin-bottom:2px; color:#fff;}
+  .anno-chip span{color:rgba(255,255,255,0.68); font-size:.72rem; line-height:1.4;}
+  .anno-1{top:2%; left:-4%;}
+  .anno-2{top:16%; right:-14%;}
+  .anno-3{top:44%; right:-18%;}
+  .anno-4{bottom:8%; left:14%;}
+  .anno-5{bottom:0%; right:-8%;}
+  .anno-line{position:absolute; background:rgba(255,255,255,0.3); height:1px; z-index:3; transform-origin:left center;}
+
+  .hero-stats-bar{
+    display:grid; grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+    margin-top:40px;
+    padding-top:34px;
+    border-top:1px solid rgba(255,255,255,0.14);
+  }
+  .hero-stat h3{font-family:'Poppins',sans-serif; font-weight:800; font-size:1.6rem; margin-bottom:4px;}
+  .hero-stat p{font-size:.85rem; color:rgba(255,255,255,0.65);}
+
+  /* ===== marquee ===== */
+  .marquee-wrap{background:var(--wine-950); padding:18px 0; overflow:hidden; white-space:nowrap;}
+  .marquee{display:inline-flex; animation:scrollLeft 26s linear infinite;}
+  .marquee span{color:rgba(255,255,255,0.6); font-weight:600; font-size:.88rem; letter-spacing:.04em; text-transform:uppercase; padding:0 32px; display:inline-flex; align-items:center; gap:10px;}
+  .marquee span i{color:var(--rose-400);}
+  @keyframes scrollLeft{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  /* ===== general section shell ===== */
+  .section-pad{padding:110px 0;}
+  .section-muted{background:linear-gradient(180deg, var(--blush-50) 0%, var(--pink-100) 100%);}
+  .sec-head{text-align:center; max-width:680px; margin:0 auto 64px;}
+  .badge-pill{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:8px 18px; border-radius:100px;
+    background:#fff; border:1px solid var(--pink-200);
+    color:var(--wine-700); font-size:.78rem; font-weight:700; letter-spacing:.02em;
+    margin-bottom:22px;
+  }
+  .live-dot{width:7px; height:7px; border-radius:50%; background:var(--red-500); animation:pulseDot 1.6s ease-in-out infinite;}
+  @keyframes pulseDot{0%,100%{opacity:1; transform:scale(1);} 50%{opacity:.5; transform:scale(1.4);}}
+  .sec-head h2{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(2rem, 3.4vw, 2.8rem); letter-spacing:-0.01em; line-height:1.2; margin-bottom:16px; color:var(--ink);}
+  .sec-head p{color:var(--ink-soft); font-size:1.02rem; line-height:1.7;}
+
+  .card{background:#fff; border:1px solid var(--pink-100); border-radius:var(--radius); box-shadow:0 1px 4px rgba(101,21,34,0.04), 0 8px 24px rgba(101,21,34,0.06);}
+  .card-hover{transition:transform .25s ease, box-shadow .25s ease;}
+  .card-hover:hover{transform:translateY(-4px); box-shadow:0 16px 36px rgba(101,21,34,0.14);}
+
+  .problem-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+  .problem-card{padding:42px; position:relative; overflow:hidden;}
+  .problem-card::before{content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px; background:var(--blush-50); border-radius:50%;}
+  .problem-card h3{font-size:1.45rem; font-weight:700; margin-bottom:16px; position:relative; display:flex; align-items:center; gap:12px;}
+  .problem-card h3 i{color:var(--maroon-600);}
+  .problem-card p{color:var(--ink-soft); line-height:1.8; position:relative; font-size:1rem;}
+  .badge-difficulty{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--blush-50); color:var(--red-500); border:1px solid var(--pink-200);
+    font-weight:700; font-size:.7rem; letter-spacing:.05em; text-transform:uppercase;
+    padding:5px 14px; border-radius:99px; margin-bottom:20px;
+  }
+  .flow-list{display:flex; flex-direction:column; gap:20px;}
+  .flow-item{display:flex; gap:16px; align-items:flex-start; padding:20px; border-radius:14px;}
+  .flow-num{min-width:42px; height:42px; border-radius:12px; background:var(--blush-50); color:var(--maroon-600); display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono', monospace; font-weight:700; font-size:.92rem;}
+  .flow-item h4{font-size:1.02rem; margin-bottom:4px; font-weight:700;}
+  .flow-item p{font-size:.9rem; color:var(--ink-soft); line-height:1.6;}
+
+  .features-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:26px;}
+  .feature-card{padding:34px 28px;}
+  .feature-icon{
+    width:56px; height:56px; border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.35rem; color:#fff; margin-bottom:22px;
+    box-shadow:0 10px 24px -8px rgba(154,38,53,0.5);
+    transition:transform .35s ease;
+  }
+  .feature-card:hover .feature-icon{transform:rotate(-6deg) scale(1.07);}
+  .icon-a{background:linear-gradient(135deg,var(--rose-400),var(--wine-700));}
+  .icon-b{background:linear-gradient(135deg,var(--maroon-600),var(--wine-900));}
+  .icon-c{background:linear-gradient(135deg,var(--red-500),var(--maroon-600));}
+  .icon-d{background:linear-gradient(135deg,var(--wine-700),var(--ink));}
+  .icon-e{background:linear-gradient(135deg,var(--pink-300),var(--red-500));}
+  .icon-f{background:linear-gradient(135deg,var(--wine-800),var(--red-500));}
+  .feature-card h3{font-size:1.14rem; font-weight:700; margin-bottom:10px;}
+  .feature-card p{color:var(--ink-soft); font-size:.93rem; line-height:1.7;}
+
+  .pipeline-track{display:grid; grid-template-columns:repeat(4, 1fr); gap:22px; position:relative;}
+  .pipeline-track::before{
+    content:''; position:absolute; top:36px; left:8%; right:8%; height:2px;
+    background:repeating-linear-gradient(90deg, var(--pink-300) 0 10px, transparent 10px 20px); z-index:0;
+  }
+  .pipe-step{position:relative; z-index:1; text-align:center; padding:32px 20px;}
+  .pipe-icon{width:72px; height:72px; margin:0 auto 18px; border-radius:50%; background:var(--blush-50); border:2px solid var(--pink-200); display:flex; align-items:center; justify-content:center; font-size:1.6rem; color:var(--maroon-600);}
+  .pipe-step h4{font-size:1.02rem; font-weight:700; margin-bottom:8px;}
+  .pipe-step p{font-size:.86rem; color:var(--ink-soft); line-height:1.6;}
+  .pipe-step .step-no{position:absolute; top:14px; right:16px; font-family:'JetBrains Mono', monospace; font-weight:700; font-size:.7rem; color:var(--pink-300);}
+
+  .impact{
+    background:linear-gradient(135deg, var(--wine-950) 0%, var(--wine-800) 50%, var(--maroon-600) 100%);
+    color:#fff;
+  }
+  .impact-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:28px;}
+  .impact-card{text-align:center;}
+  .impact-card h3{font-family:'JetBrains Mono', monospace; font-size:2.6rem; font-weight:700; margin-bottom:6px; letter-spacing:-0.02em;}
+  .impact-card p{font-size:.92rem; opacity:.85; font-weight:500;}
+
+  .quote-card{max-width:740px; margin:0 auto; text-align:center;}
+  .quote-mark{font-family:'Playfair Display', serif; font-size:4.5rem; color:var(--pink-200); line-height:0; margin-bottom:6px;}
+  .quote-card p.quote{font-family:'Playfair Display', serif; font-style:italic; font-weight:700; font-size:clamp(1.25rem, 2.2vw, 1.6rem); color:var(--ink); line-height:1.6; margin-bottom:26px;}
+  .quote-author{display:flex; align-items:center; justify-content:center; gap:14px;}
+  .quote-avatar{width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg,var(--maroon-600),var(--rose-400)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:1.05rem;}
+  .quote-author-info h5{font-size:.92rem; font-weight:700;}
+  .quote-author-info span{font-size:.8rem; color:var(--ink-soft);}
+
+  .cta-section{
+    padding:120px 0; text-align:center; color:#fff;
+    background:linear-gradient(135deg, var(--wine-950) 0%, var(--wine-800) 50%, var(--maroon-600) 100%);
+  }
+  .cta-section h2{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(2rem,4vw,3.1rem); margin-bottom:20px;}
+  .cta-section p{opacity:.8; max-width:540px; margin:0 auto 38px; font-size:1.02rem; line-height:1.7;}
+  .cta-btns{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:.5rem; font-weight:600; font-size:.95rem; border-radius:100px; padding:15px 32px; cursor:pointer; border:none; transition:all .25s ease;}
+  .btn-solid{background:#fff; color:var(--wine-800); box-shadow:0 4px 18px rgba(0,0,0,0.2);}
+  .btn-solid:hover{transform:translateY(-3px); box-shadow:0 10px 26px rgba(0,0,0,0.28);}
+  .btn-line{background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,0.4);}
+  .btn-line:hover{background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.6);}
+
+  footer{background:var(--wine-950); color:rgba(255,255,255,0.62); padding:64px 0 28px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:36px; padding-bottom:44px; border-bottom:1px solid rgba(255,255,255,0.1);}
+  .footer-brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.15rem; color:#fff;}
+  .footer-brand i{color:var(--pink-200);}
+  .footer-brand-block p{margin-top:14px; font-size:.88rem; line-height:1.7; max-width:280px; color:rgba(255,255,255,0.5);}
+  .footer-social{display:flex; gap:10px; margin-top:20px;}
+  .footer-social a{width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; transition:all .25s ease;}
+  .footer-social a:hover{background:var(--maroon-600); transform:translateY(-3px);}
+  .footer-col h4{color:#fff; font-size:.92rem; margin-bottom:18px; font-weight:700;}
+  .footer-col ul li{margin-bottom:11px;}
+  .footer-col ul li a{font-size:.88rem; transition:color .25s ease;}
+  .footer-col ul li a:hover{color:var(--pink-300);}
+  .footer-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:24px; font-size:.8rem; flex-wrap:wrap; gap:10px;}
+
+  .reveal{opacity:0; transform:translateY(36px);}
+
+  @media (max-width:1024px){
+    .hero-body{grid-template-columns:1fr; text-align:center;}
+    .hero-copy p.lead{margin-left:auto; margin-right:auto;}
+    .hero-features{align-items:center;}
+    .btn-cta{margin:0 auto;}
+    .hero-visual{height:480px; margin-top:10px;}
+    .heart-img{max-width:480px;}
+    .anno-chip, .anno-line{display:none;}
+    .problem-grid{grid-template-columns:1fr;}
+    .features-grid{grid-template-columns:repeat(2,1fr);}
+    .pipeline-track{grid-template-columns:repeat(2,1fr);}
+    .pipeline-track::before{display:none;}
+    .impact-grid{grid-template-columns:repeat(2,1fr); gap:36px;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .hero-stats-bar{grid-template-columns:repeat(3,1fr); gap:14px;}
+  }
+  @media (max-width:720px){
+    .page-wrap{padding:12px;}
+    .hero-card{border-radius:28px; padding:24px 22px 32px; min-height:auto;}
+    .hero-nav-links{
+      position:fixed; top:0; right:0; height:100vh; width:78%; max-width:300px;
+      background:var(--wine-900); flex-direction:column; justify-content:center; align-items:flex-start;
+      padding:40px; gap:26px; transform:translateX(100%); transition:transform .4s ease;
+      box-shadow:-20px 0 60px rgba(0,0,0,0.3); z-index:999;
+    }
+    .hero-nav-links.open{transform:translateX(0);}
+    .hero-nav-auth{gap:12px;}
+    .hero-menu-toggle{display:block;}
+    .hero-stats-bar{grid-template-columns:1fr; gap:18px; text-align:center;}
+    .features-grid{grid-template-columns:1fr;}
+    .impact-grid{grid-template-columns:1fr 1fr;}
+    .footer-grid{grid-template-columns:1fr; gap:30px;}
+    .footer-bottom{flex-direction:column; align-items:flex-start;}
+    .section-pad{padding:70px 0;}
+    .container{padding:0 18px;}
+  }
+  @media (max-width:480px){
+    .cta-btns{flex-direction:column; width:100%;}
+    .btn{width:100%;}
+    .impact-grid{grid-template-columns:1fr; gap:24px;}
+    .hero-visual{height:280px;}
+    .heart-img{max-width:280px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <section class="hero-card" id="top">
+    <div class="hero-nav">
+      <a href="#top" class="hero-logo"><span class="hero-logo-icon"><i class="fa-solid fa-heart-pulse"></i></span><span class="hero-logo-name">HeartCare</span></a>
+      <ul class="hero-nav-links" id="navLinks">
+        <li><a href="#problem">About</a></li>
+        <li><a href="#features">Services</a></li>
+        <li><a href="#pipeline">Medics</a></li>
+      </ul>
+      <div class="hero-nav-auth">
+        <a href="#contact">Login</a>
+        <a href="#contact" class="btn-register">Register</a>
+        <button class="hero-menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+
+    <div class="hero-body">
+      <div class="hero-copy">
+        <h1 class="reveal">Take Care of Your <span class="gradient-text">Heart Diseases</span></h1>
+        <p class="lead reveal">It keeps running 24/7, non-stop, always by your side. Give a damn about your heart.</p>
+        <ul class="hero-features reveal">
+          <li><i class="fa-solid fa-circle-check"></i> Interactive 3D heart model</li>
+          <li><i class="fa-solid fa-circle-check"></i> Expert heart health insights</li>
+          <li><i class="fa-solid fa-circle-check"></i> Personalized health tracking tools</li>
+        </ul>
+        <a href="#contact" class="btn-cta reveal">Get In touch <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="heart-glow"></div>
+
+        <div class="anno-chip anno-1"><strong>Stay Active</strong><span>30 minutes of daily activity keeps your heart strong.</span></div>
+        <div class="anno-chip anno-2"><strong>Right Atrium</strong><span>Receives deoxygenated blood from the body.</span></div>
+        <div class="anno-chip anno-3"><strong>Right Ventricle</strong><span>Pumps oxygen-poor blood to the lungs.</span></div>
+        <div class="anno-chip anno-4"><strong>Eat Smart</strong><span>A balanced diet lowers your risk of heart disease.</span></div>
+        <div class="anno-chip anno-5"><strong>Check Regularly</strong><span>Routine check-ups prevent heart disease.</span></div>
+
+        <img src="heart.png" alt="Human heart" class="heart-img" id="heartImg">
+      </div>
+    </div>
+
+    <div class="hero-stats-bar">
+      <div class="hero-stat reveal">
+        <h3 class="font-mono" data-count="100000" data-suffix="">0</h3>
+        <p>Your heart beats 100,000 times daily.</p>
+      </div>
+      <div class="hero-stat reveal">
+        <h3 class="font-mono" data-count="2000" data-suffix="">0</h3>
+        <p>It pumps 2,000 gallons of blood every day.</p>
+      </div>
+      <div class="hero-stat reveal">
+        <h3 class="font-mono">1 in 4</h3>
+        <p>Heart disease accounts for 1 in 4 deaths globally.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span><i class="fa-solid fa-heart-pulse"></i> Angiogram Analysis</span>
+    <span><i class="fa-solid fa-brain"></i> Deep Learning Segmentation</span>
+    <span><i class="fa-solid fa-triangle-exclamation"></i> Blockage Detection</span>
+    <span><i class="fa-solid fa-stethoscope"></i> Cath Lab Ready</span>
+    <span><i class="fa-solid fa-bolt"></i> Real-Time Inference</span>
+    <span><i class="fa-solid fa-heart-pulse"></i> Angiogram Analysis</span>
+    <span><i class="fa-solid fa-brain"></i> Deep Learning Segmentation</span>
+    <span><i class="fa-solid fa-triangle-exclamation"></i> Blockage Detection</span>
+    <span><i class="fa-solid fa-stethoscope"></i> Cath Lab Ready</span>
+    <span><i class="fa-solid fa-bolt"></i> Real-Time Inference</span>
+  </div>
+</div>
+
+<section class="section-pad section-muted" id="problem">
+  <div class="container">
+    <div class="problem-grid">
+      <div class="card problem-card reveal">
+        <span class="badge-difficulty"><i class="fa-solid fa-fire"></i> Difficulty: Hard</span>
+        <h3><i class="fa-solid fa-triangle-exclamation"></i> The Challenge</h3>
+        <p>During a cath lab procedure, doctors examine live X-ray angiograms of the heart's blood vessels to spot blockages. Reading these images accurately, under time pressure, while a patient is on the table, is mentally demanding and prone to human variability. A system that automatically highlights narrowed or blocked vessel sections would let doctors judge severity faster and with greater confidence.</p>
+      </div>
+      <div class="flow-list reveal">
+        <div class="flow-item card card-hover">
+          <div class="flow-num">01</div>
+          <div><h4>High Cognitive Load</h4><p>Interpreting fast-moving angiogram footage in real time leaves little room for error under pressure.</p></div>
+        </div>
+        <div class="flow-item card card-hover">
+          <div class="flow-num">02</div>
+          <div><h4>Time-Critical Decisions</h4><p>Severity of a blockage must be judged within seconds to guide the next step of the procedure.</p></div>
+        </div>
+        <div class="flow-item card card-hover">
+          <div class="flow-num">03</div>
+          <div><h4>Subtle Vessel Narrowing</h4><p>Minor stenosis can be easy to miss on a live feed, especially in low-contrast or noisy frames.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="features">
+  <div class="container">
+    <div class="sec-head">
+      <div class="badge-pill reveal"><span class="live-dot"></span> Our Solution</div>
+      <h2 class="reveal">An AI Co-Pilot for the Cath Lab</h2>
+      <p class="reveal">CoroVision AI processes live angiogram images and video, automatically segmenting vessels and flagging narrowed regions in real time.</p>
+    </div>
+    <div class="features-grid">
+      <div class="card card-hover feature-card reveal">
+        <div class="feature-icon icon-a"><i class="fa-solid fa-video"></i></div>
+        <h3>Live Video Analysis</h3>
+        <p>Processes streaming angiogram footage frame-by-frame with minimal latency, keeping pace with the live procedure.</p>
+      </div>
+      <div class="card card-hover feature-card reveal">
+        <div class="feature-icon icon-b"><i class="fa-solid fa-diagram-project"></i></div>
+        <h3>Vessel Segmentation</h3>
+        <p>Deep learning models trace the coronary vessel tree, isolating each branch for precise structural analysis.</p>
+      </div>
+      <div class="card card-hover feature-card reveal">
+        <div class="feature-icon icon-c"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+        <h3>Blockage Highlighting</h3>
+        <p>Narrowed or occluded segments are automatically outlined and color-coded by severity for instant visual clarity.</p>
+      </div>
+      <div class="card card-hover feature-card reveal">
+        <div class="feature-icon icon-d"><i class="fa-solid fa-gauge-high"></i></div>
+        <h3>Severity Scoring</h3>
+        <p>Quantifies percentage stenosis per segment, giving doctors an objective, consistent severity metric.</p>
+      </div>
+      <div class="card card-hover feature-card reveal">
+        <div class="feature-icon icon-e"><i class="fa-solid fa-bolt"></i></div>
+        <h3>Real-Time Overlay</h3>
+        <p>Results are rendered directly on the live X-ray feed, requiring no interruption to the doctor's workflow.</p>
+      </div>
+      <div class="card card-hover feature-card reveal">
+        <div class="feature-icon icon-f"><i class="fa-solid fa-shield-heart"></i></div>
+        <h3>Clinical Reliability</h3>
+        <p>Built to support &mdash; not replace &mdash; clinical judgment, with confidence indicators on every detection.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad section-muted" id="pipeline">
+  <div class="container">
+    <div class="sec-head">
+      <div class="badge-pill reveal"><span class="live-dot"></span> How It Works</div>
+      <h2 class="reveal">From Live Feed to Clinical Insight</h2>
+      <p class="reveal">A streamlined four-stage pipeline turns raw angiogram footage into actionable, real-time guidance.</p>
+    </div>
+    <div class="pipeline-track">
+      <div class="card card-hover pipe-step reveal">
+        <span class="step-no">STEP 1</span>
+        <div class="pipe-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+        <h4>Ingest Feed</h4>
+        <p>Captures live angiogram image or video stream directly from the cath lab imaging system.</p>
+      </div>
+      <div class="card card-hover pipe-step reveal">
+        <span class="step-no">STEP 2</span>
+        <div class="pipe-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <h4>Preprocess &amp; Enhance</h4>
+        <p>Denoises frames and enhances vessel contrast to prepare footage for segmentation.</p>
+      </div>
+      <div class="card card-hover pipe-step reveal">
+        <span class="step-no">STEP 3</span>
+        <div class="pipe-icon"><i class="fa-solid fa-brain"></i></div>
+        <h4>AI Segmentation</h4>
+        <p>Deep neural network traces vessel structure and detects abnormal narrowing in real time.</p>
+      </div>
+      <div class="card card-hover pipe-step reveal">
+        <span class="step-no">STEP 4</span>
+        <div class="pipe-icon"><i class="fa-solid fa-display"></i></div>
+        <h4>Overlay &amp; Alert</h4>
+        <p>Highlights blockages directly on screen with severity scores for immediate clinical review.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad impact" id="impact">
+  <div class="container">
+    <div class="sec-head" style="max-width:640px;">
+      <div class="badge-pill reveal" style="background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.25); color:#fff;"><span class="live-dot"></span> Impact</div>
+      <h2 class="reveal" style="color:#fff;">Faster Diagnosis, Better Outcomes</h2>
+    </div>
+    <div class="impact-grid">
+      <div class="impact-card reveal"><h3 data-count="98">0<span>%</span></h3><p>Detection Accuracy</p></div>
+      <div class="impact-card reveal"><h3 data-count="60">0<span>%</span></h3><p>Faster Assessment</p></div>
+      <div class="impact-card reveal"><h3 data-count="200">0<span>ms</span></h3><p>Average Latency</p></div>
+      <div class="impact-card reveal"><h3 data-count="10">0<span>k+</span></h3><p>Frames Analyzed / Sec</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="quote-card reveal">
+      <div class="quote-mark">&ldquo;</div>
+      <p class="quote">In a cath lab, hesitation isn't an option. Having every narrowed vessel flagged the instant it appears feels less like using a tool, and more like having a second pair of trained eyes beside you.</p>
+      <div class="quote-author">
+        <div class="quote-avatar">DR</div>
+        <div class="quote-author-info">
+          <h5>Interventional Cardiology, Beta Partner</h5>
+          <span>Early Access Program</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="contact">
+  <div class="container">
+    <div class="badge-pill reveal" style="background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.25); color:#fff;"><span class="live-dot"></span> Ready When You Are</div>
+    <h2 class="reveal">Bring AI-Assisted Vessel Analysis to Your Cath Lab</h2>
+    <p class="reveal">Let's explore how real-time coronary vessel analysis can support faster, more confident clinical decisions.</p>
+    <div class="cta-btns reveal">
+      <a href="#" class="btn btn-solid"><i class="fa-solid fa-paper-plane"></i> Request a Demo</a>
+      <a href="#" class="btn btn-line"><i class="fa-solid fa-file-lines"></i> Read the Whitepaper</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-block">
+        <a href="#top" class="footer-brand"><i class="fa-solid fa-heart-pulse"></i> HeartCare</a>
+        <p>Real-time AI vessel analysis for the modern cath lab &mdash; built to help clinicians see blockages faster and clearer.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#features">Solution</a></li>
+          <li><a href="#pipeline">How it Works</a></li>
+          <li><a href="#impact">Impact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Research</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Compliance</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 HeartCare. All rights reserved.</span>
+      <span class="font-serif" style="font-style:italic;">Built for clinicians, by innovators.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Subtle heartbeat pulse on the hero image (CSS handles float/glow;
+  // this keeps the "beat" tempo in sync with the glow behind it).
+  const heartImg = document.getElementById('heartImg');
+  if (heartImg){
+    gsap.to(heartImg, {
+      scale: 1.035,
+      duration: 0.55,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut',
+      transformOrigin: '50% 50%'
+    });
+  }
+</script>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    menuToggle.innerHTML = navLinks.classList.contains('open') ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+  });
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+  }));
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.to('.hero-card .reveal', { opacity:1, y:0, duration:1, ease:'power3.out', stagger:0.1, delay:0.2 });
+
+  gsap.utils.toArray('.section-pad .reveal, .cta-section .reveal').forEach((el) => {
+    gsap.to(el, { opacity:1, y:0, duration:0.9, ease:'power3.out', scrollTrigger:{ trigger: el, start:'top 85%' } });
+  });
+
+  gsap.utils.toArray('.feature-card, .pipe-step, .impact-card, .flow-item').forEach((el, i) => {
+    gsap.fromTo(el, {opacity:0, y:26}, {
+      opacity:1, y:0, duration:0.7, ease:'power2.out', delay:(i % 4) * 0.08,
+      scrollTrigger:{ trigger: el, start:'top 90%' }
+    });
+  });
+
+  // hero stat counters (large raw numbers with thousands separators)
+  document.querySelectorAll('.hero-stat [data-count]').forEach((el) => {
+    const target = parseInt(el.getAttribute('data-count'), 10);
+    const obj = { val: 0 };
+    ScrollTrigger.create({
+      trigger: el, start:'top 95%', once:true,
+      onEnter: () => gsap.to(obj, {
+        val:target, duration:1.8, ease:'power2.out',
+        onUpdate: () => { el.textContent = Math.floor(obj.val).toLocaleString('en-US'); }
+      })
+    });
+  });
+
+  // section stat counters (percent / ms / k+)
+  document.querySelectorAll('.impact-card [data-count]').forEach((el) => {
+    const target = parseInt(el.getAttribute('data-count'), 10);
+    const obj = { val: 0 };
+    ScrollTrigger.create({
+      trigger: el, start:'top 90%', once:true,
+      onEnter: () => gsap.to(obj, {
+        val:target, duration:1.8, ease:'power2.out',
+        onUpdate: () => { el.childNodes[0].nodeValue = Math.floor(obj.val); }
+      })
+    });
+  });
+</script>
+
+</body>
+</html>

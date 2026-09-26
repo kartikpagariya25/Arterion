@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get In Touch — Arterion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Bricolage+Grotesque:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/theme.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; max-width:1000px; margin:0 auto;}
+  .contact-form{padding:38px;}
+  .form-group{margin-bottom:20px;}
+  .form-group label{display:block; font-size:.86rem; font-weight:600; margin-bottom:8px; color:var(--ink);}
+  .form-group input, .form-group textarea{
+    width:100%; padding:13px 16px; border-radius:12px; border:1.5px solid var(--pink-200);
+    font-family:inherit; font-size:.92rem; background:var(--blush-50); transition:border-color .2s ease;
+  }
+  .form-group input:focus, .form-group textarea:focus{outline:none; border-color:var(--maroon-600);}
+  .form-group textarea{resize:vertical; min-height:120px;}
+  .contact-info-card{padding:38px;}
+  .contact-info-item{display:flex; gap:16px; margin-bottom:26px;}
+  .contact-info-icon{width:46px; height:46px; border-radius:12px; background:var(--blush-50); color:var(--maroon-600); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0;}
+  .contact-info-item h4{font-size:.95rem; font-weight:700; margin-bottom:4px;}
+  .contact-info-item p{font-size:.88rem; color:var(--ink-soft); line-height:1.6;}
+  @media (max-width:900px){.contact-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <section class="top-card">
+    <div id="nav-mount"></div>
+    <div class="page-title-block">
+      <h1 class="reveal">Get In <span class="gradient-text" style="font-family:'Bricolage Grotesque',sans-serif; text-transform:none; font-weight:700; font-style:italic;">Touch</span></h1>
+      <p class="reveal">Questions about Arterion, our research, or partnership opportunities? We'd love to hear from you.</p>
+    </div>
+  </section>
+</div>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="card contact-form reveal">
+        <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:22px;">Send us a message</h3>
+        <form id="contactForm">
+          <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your name" required></div>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@example.com" required></div>
+          <div class="form-group"><label>Message</label><textarea placeholder="Tell us what's on your mind..." required></textarea></div>
+          <button type="submit" class="btn btn-solid" style="width:100%;"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+        </form>
+      </div>
+      <div class="card contact-info-card reveal">
+        <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:22px;">Contact Information</h3>
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="fa-solid fa-envelope"></i></div>
+          <div><h4>Email</h4><p>team.Arterion@gmail.com</p></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <div><h4>Location</h4><p>Vishwakarma Institute of Technology, Pune, Maharashtra, India</p></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="fa-solid fa-trophy"></i></div>
+          <div><h4>Built For</h4><p>Synapse Hackathon &mdash; AI in Healthcare Track, Symbiosis Pune</p></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="fa-brands fa-github"></i></div>
+          <div><h4>Source Code</h4><p>Available on request for review by hackathon judges and collaborators.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div id="footer-mount"></div></footer>
+<div id="emergency-mount"></div>
+<script src="js/auth.js"></script>
+<script src="js/common.js"></script>
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Thanks for reaching out! This is a demo form — hook it up to your backend or an email service when ready.');
+    this.reset();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CPR &amp; Cardiac Arrest Survival — Arterion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Bricolage+Grotesque:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/theme.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  .steps-shell{max-width:900px; margin:0 auto;}
+  .step-row{display:flex; gap:22px; padding:28px 30px; margin-bottom:18px;}
+  .step-num{width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--maroon-600),var(--wine-900)); color:#fff; font-weight:800; font-size:1.05rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .step-row h4{font-size:1rem; font-weight:700; margin-bottom:6px;}
+  .step-row p{font-size:.9rem; color:var(--ink-soft); line-height:1.7;}
+  .step-row .tag{display:inline-block; font-size:.7rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; background:var(--blush-50); color:var(--wine-800); padding:3px 10px; border-radius:100px; margin-top:8px;}
+
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:26px; max-width:1000px; margin:0 auto 40px;}
+  .method-card{padding:30px;}
+  .method-card h3{font-size:1.05rem; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:10px; color:var(--wine-800);}
+  .method-card ol{padding-left:20px;}
+  .method-card ol li{font-size:.88rem; color:var(--ink-soft); line-height:1.75; margin-bottom:8px;}
+
+  .rate-banner{
+    background:linear-gradient(135deg, var(--wine-950), var(--wine-800)); color:#fff;
+    border-radius:var(--radius); padding:30px 34px; text-align:center; margin:0 auto 44px; max-width:900px;
+    display:flex; align-items:center; justify-content:center; gap:30px; flex-wrap:wrap;
+  }
+  .rate-stat{text-align:center;}
+  .rate-stat .num{font-size:2rem; font-weight:800; font-family:'Bricolage Grotesque',sans-serif;}
+  .rate-stat .lbl{font-size:.78rem; opacity:.8; margin-top:2px;}
+
+  .warning-banner{
+    background:linear-gradient(135deg, var(--red-500), var(--maroon-600));
+    color:#fff; padding:26px 30px; border-radius:var(--radius); margin-bottom:34px;
+    display:flex; gap:16px; align-items:flex-start; max-width:900px; margin-left:auto; margin-right:auto;
+  }
+  .warning-banner i{font-size:1.4rem; margin-top:2px;}
+  .warning-banner p{font-size:.88rem; line-height:1.7; opacity:.92;}
+
+  @media (max-width:800px){.two-col{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <section class="top-card">
+    <div id="nav-mount"></div>
+    <div class="page-title-block">
+      <h1 class="reveal">CPR &amp; Cardiac Arrest <span class="gradient-text" style="font-family:'Bricolage Grotesque',sans-serif; text-transform:none; font-weight:700; font-style:italic;">Survival Skills</span></h1>
+      <p class="reveal">Knowing these steps can double or triple a person's chance of survival before an ambulance arrives.</p>
+    </div>
+  </section>
+</div>
+
+<section class="section-pad">
+  <div class="container">
+
+    <div class="warning-banner reveal">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <p>This is general awareness information, not a substitute for certified first-aid/CPR training. In a real emergency, call <strong>108</strong> immediately and perform CPR only if you are trained or being guided by emergency dispatch.</p>
+    </div>
+
+    <div class="rate-banner reveal">
+      <div class="rate-stat"><div class="num">100&ndash;120</div><div class="lbl">Chest compressions per minute</div></div>
+      <div class="rate-stat"><div class="num">2 in</div><div class="lbl">Compression depth (~5&ndash;6cm)</div></div>
+      <div class="rate-stat"><div class="num">&lt;10s</div><div class="lbl">Max pause between compressions</div></div>
+    </div>
+
+    <div class="sec-head">
+      <div class="badge-pill reveal"><span class="live-dot"></span> Step by Step</div>
+      <h2 class="reveal">What To Do When Someone Collapses</h2>
+    </div>
+
+    <div class="steps-shell">
+      <div class="card card-hover step-row reveal">
+        <div class="step-num">1</div>
+        <div>
+          <h4>Check for Response &amp; Breathing</h4>
+          <p>Tap the person firmly on the shoulders and shout. Look for normal breathing for no more than 10 seconds. Gasping or irregular breathing is NOT normal breathing.</p>
+        </div>
+      </div>
+      <div class="card card-hover step-row reveal">
+        <div class="step-num">2</div>
+        <div>
+          <h4>Call for Help Immediately</h4>
+          <p>Shout for someone nearby to call <strong>108</strong> (or dial it yourself on speaker) and to bring an AED (automated external defibrillator) if one is available nearby.</p>
+          <span class="tag">Do this before starting CPR</span>
+        </div>
+      </div>
+      <div class="card card-hover step-row reveal">
+        <div class="step-num">3</div>
+        <div>
+          <h4>Start Chest Compressions</h4>
+          <p>Kneel beside the person. Place the heel of one hand on the center of the chest, other hand on top, fingers interlocked. Push hard and fast &mdash; 100&ndash;120 compressions per minute, at least 5cm deep, letting the chest fully recoil between pushes.</p>
+        </div>
+      </div>
+      <div class="card card-hover step-row reveal">
+        <div class="step-num">4</div>
+        <div>
+          <h4>Use an AED If Available</h4>
+          <p>Turn it on and follow its voice prompts &mdash; it will guide pad placement and tell you when to stand clear and shock. AEDs are designed to be used safely by untrained bystanders.</p>
+        </div>
+      </div>
+      <div class="card card-hover step-row reveal">
+        <div class="step-num">5</div>
+        <div>
+          <h4>Continue Until Help Arrives</h4>
+          <p>Keep compressing without stopping until paramedics take over, the person starts breathing normally, or you are physically unable to continue. Switch with another trained person every 2 minutes if possible to avoid fatigue.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad section-muted">
+  <div class="container">
+    <div class="sec-head">
+      <div class="badge-pill reveal"><span class="live-dot"></span> Method Reference</div>
+      <h2 class="reveal">Hands-Only CPR vs. Choking Response</h2>
+      <p class="reveal">Two different emergencies, two different techniques &mdash; know which one applies.</p>
+    </div>
+    <div class="two-col">
+      <div class="card method-card reveal">
+        <h3><i class="fa-solid fa-heart-pulse"></i> Hands-Only CPR (Cardiac Arrest)</h3>
+        <ol>
+          <li>Confirm unresponsiveness and abnormal/absent breathing.</li>
+          <li>Call 108 / get someone else to call.</li>
+          <li>Push hard and fast in the center of the chest, 100&ndash;120/min.</li>
+          <li>Do not stop to check for breathing repeatedly &mdash; keep going.</li>
+          <li>Rescue breaths are optional for untrained bystanders; continuous compressions are still effective.</li>
+        </ol>
+      </div>
+      <div class="card method-card reveal">
+        <h3><i class="fa-solid fa-lungs"></i> Choking Response (Abdominal Thrusts)</h3>
+        <ol>
+          <li>Ask "Are you choking?" &mdash; if they can't speak/cough/breathe, act.</li>
+          <li>Stand behind them, wrap arms around their waist.</li>
+          <li>Make a fist above the navel, grasp it with your other hand.</li>
+          <li>Give quick, upward abdominal thrusts until the object is expelled.</li>
+          <li>If they become unresponsive, lower them down and begin CPR immediately.</li>
+        </ol>
+      </div>
+    </div>
+
+    <p style="text-align:center; margin-top:10px; font-size:.85rem; color:var(--ink-soft); max-width:700px; margin-left:auto; margin-right:auto;">
+      <i class="fa-solid fa-circle-info"></i> We strongly encourage getting certified in CPR and first aid through a recognized provider (Red Cross, St. John Ambulance, or a local hospital training program) &mdash; hands-on practice builds the muscle memory this page cannot.
+    </p>
+  </div>
+</section>
+
+<footer><div id="footer-mount"></div></footer>
+<div id="emergency-mount"></div>
+<script src="js/auth.js"></script>
+<script src="js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Contacts — Arterion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Bricolage+Grotesque:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/theme.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  .sos-banner{
+    background:linear-gradient(135deg, var(--red-500), var(--maroon-600)); color:#fff;
+    border-radius:var(--radius); padding:30px 34px; text-align:center; margin-bottom:44px;
+  }
+  .sos-banner h2{font-size:1.5rem; font-weight:800; margin-bottom:10px;}
+  .sos-numbers{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:18px;}
+  .sos-number{background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.35); border-radius:14px; padding:14px 26px; font-weight:700; font-size:1.1rem;}
+  .sos-number span{display:block; font-size:.72rem; font-weight:500; opacity:.8; margin-top:4px;}
+
+  .hospital-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
+  .hospital-card{padding:26px 28px;}
+  .hospital-card h4{font-size:1.02rem; font-weight:700; margin-bottom:6px;}
+  .hospital-card .loc{font-size:.85rem; color:var(--ink-soft); margin-bottom:12px; display:flex; align-items:center; gap:8px;}
+  .hospital-card .phone{display:inline-flex; align-items:center; gap:8px; color:var(--wine-800); font-weight:700; font-size:.92rem;}
+  @media (max-width:800px){.hospital-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <section class="top-card">
+    <div id="nav-mount"></div>
+    <div class="page-title-block">
+      <h1 class="reveal">Emergency Contacts</h1>
+      <p class="reveal">In a cardiac emergency, every second counts. Keep these numbers within reach.</p>
+    </div>
+  </section>
+</div>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="sos-banner reveal">
+      <h2><i class="fa-solid fa-truck-medical"></i> In an Emergency, Call Immediately</h2>
+      <p>If you or someone nearby shows signs of a heart attack (chest pain, breathlessness, cold sweat, pain radiating to arm/jaw), call for help right away &mdash; don't wait.</p>
+      <div class="sos-numbers">
+        <a href="tel:108" class="sos-number">108<span>National Ambulance (India)</span></a>
+        <a href="tel:102" class="sos-number">102<span>Medical Helpline</span></a>
+        <a href="tel:112" class="sos-number">112<span>National Emergency Number</span></a>
+      </div>
+    </div>
+
+    <div class="sec-head">
+      <div class="badge-pill reveal"><span class="live-dot"></span> Pune Region</div>
+      <h2 class="reveal">Cardiac Care Hospitals</h2>
+      <p class="reveal">A starting list of hospitals with cardiac care facilities. Always verify current details before relying on them.</p>
+    </div>
+
+    <div class="hospital-grid">
+      <div class="card card-hover hospital-card reveal">
+        <h4>Ruby Hall Clinic</h4>
+        <div class="loc"><i class="fa-solid fa-location-dot"></i> Sassoon Road, Pune</div>
+        <a href="tel:02066455100" class="phone"><i class="fa-solid fa-phone"></i> 020 6645 5100</a>
+      </div>
+      <div class="card card-hover hospital-card reveal">
+        <h4>Sahyadri Super Speciality Hospital</h4>
+        <div class="loc"><i class="fa-solid fa-location-dot"></i> Deccan Gymkhana, Pune</div>
+        <a href="tel:8806252525" class="phone"><i class="fa-solid fa-phone"></i> 88062 52525</a>
+      </div>
+      <div class="card card-hover hospital-card reveal">
+        <h4>Jehangir Hospital</h4>
+        <div class="loc"><i class="fa-solid fa-location-dot"></i> Sassoon Road, Pune</div>
+        <a href="tel:02066818890" class="phone"><i class="fa-solid fa-phone"></i> 020 6681 8890</a>
+      </div>
+      <div class="card card-hover hospital-card reveal">
+        <h4>Deenanath Mangeshkar Hospital</h4>
+        <div class="loc"><i class="fa-solid fa-location-dot"></i> Erandwane, Pune</div>
+        <a href="tel:02040151000" class="phone"><i class="fa-solid fa-phone"></i> 020 4015 1000</a>
+      </div>
+      <div class="card card-hover hospital-card reveal">
+        <h4>Aditya Birla Memorial Hospital</h4>
+        <div class="loc"><i class="fa-solid fa-location-dot"></i> Chinchwad, Pune</div>
+        <a href="tel:9881123006" class="phone"><i class="fa-solid fa-phone"></i> 98811 23006</a>
+      </div>
+      <div class="card card-hover hospital-card reveal">
+        <h4>Symbiosis University Hospital &amp; Research Centre</h4>
+        <div class="loc"><i class="fa-solid fa-location-dot"></i> Lavale, Pune</div>
+        <a href="tel:02028116000" class="phone"><i class="fa-solid fa-phone"></i> 020 2811 6000</a>
+      </div>
+    </div>
+
+    <p style="text-align:center; margin-top:30px; font-size:.85rem; color:var(--ink-soft);">
+      <i class="fa-solid fa-circle-info"></i> Contact details may change &mdash; please verify before an emergency. Customize this list with hospitals relevant to your city.
+    </p>
+  </div>
+</section>
+
+<footer><div id="footer-mount"></div></footer>
+<div id="emergency-mount"></div>
+<script src="js/auth.js"></script>
+<script src="js/common.js"></script>
+</body>
+</html>

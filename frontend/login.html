@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — Arterion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Bricolage+Grotesque:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/theme.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+  .auth-shell{max-width:440px; margin:0 auto;}
+  .auth-card{padding:38px;}
+  .auth-card h2{font-size:1.4rem; font-weight:700; margin-bottom:8px;}
+  .auth-card .sub{color:var(--ink-soft); font-size:.88rem; margin-bottom:26px;}
+  .form-group{margin-bottom:18px;}
+  .form-group label{display:block; font-size:.86rem; font-weight:600; margin-bottom:8px; color:var(--ink);}
+  .form-group input{
+    width:100%; padding:13px 16px; border-radius:12px; border:1.5px solid var(--pink-200);
+    font-family:inherit; font-size:.92rem; background:var(--blush-50); transition:border-color .2s ease;
+  }
+  .form-group input:focus{outline:none; border-color:var(--maroon-600);}
+  .auth-switch{text-align:center; margin-top:20px; font-size:.88rem; color:var(--ink-soft);}
+  .auth-switch a{color:var(--wine-800); font-weight:600;}
+  .auth-error{display:none; background:#fde8e8; color:#b42318; border-radius:10px; padding:12px 16px; font-size:.85rem; margin-bottom:18px;}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <section class="top-card">
+    <div id="nav-mount"></div>
+    <div class="page-title-block">
+      <h1 class="reveal">Welcome Back</h1>
+      <p class="reveal">Log in to view your scan history and personalized reports.</p>
+    </div>
+  </section>
+</div>
+
+<section class="section-pad">
+  <div class="container auth-shell">
+    <div class="card auth-card reveal">
+      <h2>Log In</h2>
+      <p class="sub">Access your Arterion account.</p>
+      <div class="auth-error" id="authError"></div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="password" placeholder="Your password" required>
+        </div>
+        <button type="submit" class="btn btn-solid" style="width:100%;" id="loginBtn"><i class="fa-solid fa-right-to-bracket"></i> Log In</button>
+      </form>
+      <div class="auth-switch">Don't have an account? <a href="register.html">Register here</a></div>
+    </div>
+  </div>
+</section>
+
+<footer><div id="footer-mount"></div></footer>
+<div id="emergency-mount"></div>
+<script src="js/auth.js"></script>
+<script src="js/common.js"></script>
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const errBox = document.getElementById("authError");
+    errBox.style.display = "none";
+    const btn = document.getElementById("loginBtn");
+    btn.disabled = true;
+    btn.textContent = "Logging in...";
+
+    try {
+      const res = await fetch(`${API_BASE}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || "Login failed");
+
+      saveSession(data.token, data.user);
+      window.location.href = "dashboard.html";
+    } catch (err) {
+      errBox.textContent = err.message || "Something went wrong. Please try again.";
+      errBox.style.display = "block";
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Log In';
+    }
+  });
+</script>
+</body>
+</html>
