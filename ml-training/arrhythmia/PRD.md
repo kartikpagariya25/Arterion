@@ -78,7 +78,7 @@ This must match what `ml-inference/app/arrhythmia/router.py` expects to return t
 
 ## 8. Deliverables
 
-1. Reproducible training pipeline (`ml-training/src/`)
+1. Reproducible training pipeline (`ml-training/arrhythmia/src/`)
 2. Trained model weights + ONNX export + `metrics.json` (honest inter-patient results)
 3. A rhythm-rule layer that converts a beat sequence into rhythm-level alerts (VT, AFib, bradycardia, tachycardia, bigeminy, trigeminy)
 4. A drop-in replacement for `ml-inference/app/arrhythmia/model.py` in the main repo, wired to the exported ONNX model

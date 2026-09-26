@@ -1,0 +1,13 @@
+{
+  "task": "vessel",
+  "test_set_size": 300,
+  "dice": 0.7743,
+  "iou": 0.6442,
+  "precision": 0.8323,
+  "recall": 0.7433,
+  "model": {
+    "name": "VesselUNet (ResNet34 encoder)",
+    "params": 24436369
+  },
+  "generated_at": "2026-09-25T14:15:47.228302+00:00"
+}

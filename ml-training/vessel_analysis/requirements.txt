@@ -1,0 +1,11 @@
+requests==2.32.3
+numpy>=1.26.4,<2.0
+opencv-python-headless>=4.10.0
+scikit-image>=0.24.0
+scikit-learn>=1.5.2,<1.6
+matplotlib>=3.9.2,<3.10
+onnx==1.17.0
+onnxruntime==1.19.2
+albumentations>=1.4.0
+pycocotools>=2.0.7
+segmentation-models-pytorch>=0.3.4

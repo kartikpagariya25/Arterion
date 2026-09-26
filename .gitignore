@@ -8,8 +8,10 @@ dist/
 .env.local
 .DS_Store
 
-**/data/mitdb/
-**/data/raw/
-**/data/processed/
-**/data/test_signals/
-**/artifacts/*.pt
+*.onnx
+*.pt
+*.pth
+*.7z
+**/weights/
+**/data/
+ml-training/echonet_data/

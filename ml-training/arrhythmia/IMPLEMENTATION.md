@@ -7,7 +7,7 @@ Companion to `PRD.md`. This is the exact, phase-wise build order. Each phase has
 ## Folder Structure
 
 ```
-ml-training/
+ml-training/arrhythmia/
   PRD.md
   IMPLEMENTATION.md
   data/
@@ -40,7 +40,7 @@ Nothing under `data/` or `*.pt` is committed to git — only `artifacts/model.on
 ## Phase 0 — Environment Setup
 
 ```bash
-cd ml-training
+cd ml-training/arrhythmia
 python -m venv venv
 venv\Scripts\activate          # Windows
 pip install torch --index-url https://download.pytorch.org/whl/cu121   # CUDA build for RTX 5050

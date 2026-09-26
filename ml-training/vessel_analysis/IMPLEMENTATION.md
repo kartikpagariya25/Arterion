@@ -43,16 +43,31 @@ Nothing under `data/` or `*.pt` is committed — only ONNX exports and metrics J
 
 ## Phase 0 — Environment Setup
 
+This project uses **one shared venv for all of `ml-training/`** (not a separate venv per PS) — torch/torchvision are large, GPU-specific installs, and there's no reason to redownload them for every problem statement. If `ml-training/venv/` already exists (from PS5), skip straight to installing this PS's extra packages.
+
 ```bash
-cd ml-training/vessel_analysis
+cd ml-training
+venv\Scripts\activate          # reuse the existing shared venv
+
+cd vessel_analysis
+pip install -r requirements.txt   # torch/torchvision are NOT in here — only PS1-specific packages
+
+# IMPORTANT: install/reinstall torch+torchvision LAST, after requirements.txt.
+# Some packages (segmentation-models-pytorch, via timm) list "torch" as a plain
+# PyPI dependency with no CUDA pin — if pip resolves that after your GPU build
+# is already installed, it can silently replace it with a CPU-only wheel from
+# default PyPI. Installing the CUDA build last guarantees it's the one that sticks.
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+If the shared venv doesn't exist yet (first PS being set up):
+```bash
+cd ml-training
 python -m venv venv
 venv\Scripts\activate
-
-# torch installed separately, matching the exact GPU (lesson from PS5 — verify the CUDA build works before installing anything else)
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
 python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0))"
-
-pip install -r requirements.txt
 ```
 
 **pycocotools check (do this before anything else depends on it):**

@@ -20,7 +20,7 @@ All 9 phases from `IMPLEMENTATION.md` are **code-complete and verified**, but on
 | `src/infer.py` | Complete — full pipeline glue for reference/local testing |
 | `src/test_preprocess.py`, `src/test_rhythm_rules.py` | Complete — 13/13 pytest pass |
 | **Main repo integration** | Complete — `ml-inference/app/arrhythmia/model.py`, `preprocess.py`, `rhythm_rules.py` wired to load `weights/model.onnx` + `weights/feature_stats.json` automatically. Falls back gracefully to a placeholder response when weights aren't present yet. Verified end-to-end with a mocked CSV download |
-| `ml-training/requirements.txt`, `ml-inference/requirements.txt` | Updated with exact pinned versions |
+| `ml-training/arrhythmia/requirements.txt`, `ml-inference/requirements.txt` | Updated with exact pinned versions |
 
 ## What Is NOT Done
 
@@ -36,7 +36,7 @@ Everything below runs on your RTX 5050 machine, not in a Claude session — trai
 
 ### 1. Environment setup (one-time)
 ```bash
-cd ml-training
+cd ml-training/arrhythmia
 python -m venv venv
 venv\Scripts\activate
 

@@ -1,0 +1,13 @@
+{
+  "task": "lv_outline",
+  "test_set_size": 2552,
+  "dice": 0.9249,
+  "iou": 0.8626,
+  "precision": 0.9234,
+  "recall": 0.9328,
+  "model": {
+    "name": "LVUNet (ResNet34 encoder, shared with PS1)",
+    "params": 24436369
+  },
+  "generated_at": "2026-09-25T16:48:37.161309+00:00"
+}
