@@ -9,17 +9,9 @@ Cardiac AI models for the Synapse Hackathon (Symbiosis Pune, AI in Healthcare tr
 - `ml-training/<problem-statement>/` — one self-contained folder per PS, each with its own `PRD.md`, `IMPLEMENTATION.md`, `src/`, `data/` (gitignored), and `artifacts/` (trained weights + metrics, gitignored except the final ONNX export and `metrics.json`)
 - `ml-inference/` — single deployable FastAPI service, one router per PS (`app/<problem_statement>/`), each loading its trained ONNX model from a local `weights/` folder
 
-## Problem Statements
 
-| Folder | Status |
-|---|---|
-| `ml-training/arrhythmia/` | ✅ Fully trained, evaluated, exported, integrated |
-| `ml-training/vessel_analysis/` | 🔄 In progress |
-| `ml-training/ef_estimation/` | Not started |
-| `ml-training/lv_outline/` | Not started |
-| `ml-training/dominance/` | Not started |
 
-## Setup (per problem statement)
+## Setup
 
 ```bash
 cd ml-training/<problem-statement>
