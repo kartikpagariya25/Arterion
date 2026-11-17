@@ -2,6 +2,18 @@
 
 Arterion (built as **CardioSense**) is a full-stack cardiac AI platform: a FastAPI backend serving five independent deep-learning models, a static multi-page frontend for patients and clinicians, and a standalone `ml-training/` workspace where each model is trained and exported. Originally built for the Synapse Hackathon (Symbiosis Pune, AI in Healthcare track).
 
+## Table of Contents
+
+- [Screenshots](#screenshots)
+- [Architecture](#architecture)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Quick Start](#quick-start)
+- [Training a model from scratch](#training-a-model-from-scratch)
+- [ML Models](#ml-models)
+- [Project Structure](#project-structure)
+- [Credits](#credits)
+
 ## Screenshots
 
 | Home | Login | Scan |
@@ -85,3 +97,44 @@ pip install -r requirements.txt
 ```
 
 Follow that folder's `IMPLEMENTATION.md` phase by phase, then export to ONNX and drop the result into `ml-inference/app/<problem_statement>/weights/`.
+
+## ML Models
+
+Metrics below are from each model's held-out test set (see `ml-training/<problem-statement>/artifacts/metrics*.json`). Dominance classification is code-complete but not yet trained on the full dataset.
+
+| Problem statement | Model | Params | Test set | Key metrics |
+|---|---|---|---|---|
+| Vessel segmentation | VesselUNet (ResNet34 encoder) | 24.4M | 300 images | Dice 0.774, IoU 0.644, precision 0.832, recall 0.743 |
+| Stenosis segmentation | VesselUNet (ResNet34 encoder) | 24.4M | 300 images | Dice 0.575, IoU 0.428, precision 0.561, recall 0.683 |
+| Ejection fraction estimation | R(2+1)D-18 regressor | 31.3M | 1,277 clips | MAE 5.13, RMSE 6.95, R² 0.676 |
+| Left ventricle outline | LVUNet (ResNet34 encoder) | 24.4M | 2,552 frames | Dice 0.925, IoU 0.863, precision 0.923, recall 0.933 |
+| Arrhythmia classification | CardioNet (1D ResNet + RR features) | 498K | MIT-BIH, inter-patient split | Accuracy 0.981 (macro-F1 is low — minority arrhythmia classes have very few test examples in the inter-patient split) |
+| Cardiac dominance classification | — | — | — | In progress — code-complete, not yet trained on the full dataset |
+
+## Project Structure
+
+```
+arterion/
+├── frontend/              # Static multi-page site (HTML/CSS/JS), served via nginx in prod
+├── ml-inference/          # FastAPI service — one router per problem statement
+│   └── app/
+│       ├── auth/          # JWT auth
+│       ├── scans/         # Scan upload & history
+│       ├── vessel_analysis/
+│       ├── ef_estimation/
+│       ├── lv_outline/
+│       ├── dominance/
+│       └── arrhythmia/
+├── ml-training/           # One self-contained folder per problem statement
+│   └── <problem-statement>/
+│       ├── PRD.md / IMPLEMENTATION.md / STATUS.md
+│       ├── src/
+│       └── artifacts/     # Trained weights + metrics (gitignored except ONNX export + metrics.json)
+├── docs/                  # Architecture diagram + screenshots (this README)
+├── docker-compose.yml
+└── run.ps1                # One-command Windows launcher
+```
+
+## Credits
+
+Built by Kartik Pagariya for the Synapse Hackathon (Symbiosis Pune, AI in Healthcare track).
