@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  ml-inference:
+    build:
+      context: ./ml-inference
+    container_name: arterion-ml-inference
+    ports:
+      - "8000:8000"
+    volumes:
+      - ml_uploads:/app/app/static_uploads
+      - ml_db:/app/app/data
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: arterion-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - ml-inference
+    restart: unless-stopped
+
+volumes:
+  ml_uploads:
+  ml_db:
