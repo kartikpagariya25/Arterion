@@ -5,7 +5,6 @@ Arterion (built as **CardioSense**) is a full-stack cardiac AI platform: a FastA
 ## Table of Contents
 
 - [Screenshots](#screenshots)
-- [Architecture](#architecture)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Quick Start](#quick-start)
@@ -19,10 +18,6 @@ Arterion (built as **CardioSense**) is a full-stack cardiac AI platform: a FastA
 | Home | Login | Scan |
 |---|---|---|
 | ![Home page](docs/screenshots/home.png) | ![Login page](docs/screenshots/login.png) | ![Scan upload page](docs/screenshots/scan.png) |
-
-## Architecture
-
-![Architecture diagram](docs/architecture.png)
 
 The frontend talks to a single FastAPI service over REST. Each cardiac problem statement is its own router, loading its own ONNX model from `ml-inference/app/<problem_statement>/weights/`. Scans and user data persist to a local SQLite database; trained weights are produced separately in `ml-training/` and exported as ONNX for inference.
 
@@ -130,7 +125,7 @@ arterion/
 │       ├── PRD.md / IMPLEMENTATION.md / STATUS.md
 │       ├── src/
 │       └── artifacts/     # Trained weights + metrics (gitignored except ONNX export + metrics.json)
-├── docs/                  # Architecture diagram + screenshots (this README)
+├── docs/                  # Screenshots (this README)
 ├── docker-compose.yml
 └── run.ps1                # One-command Windows launcher
 ```
