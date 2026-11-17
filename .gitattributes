@@ -1,0 +1,13 @@
+# Normalize line endings for text files, regardless of OS.
+* text=auto eol=lf
+
+*.ps1 text eol=crlf
+
+# Treat these as binary — never run through text diff/merge.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.onnx binary
+*.pt binary
+*.pth binary
+*.db binary
