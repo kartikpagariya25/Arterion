@@ -1,13 +1,23 @@
+# Python
 **/venv/
 **/__pycache__/
 **/.pytest_cache/
 *.pyc
-node_modules/
-dist/
+
+# Environments / secrets
 .env
 .env.local
-.DS_Store
 
+# Node (if any tooling is added later)
+node_modules/
+dist/
+
+# OS / editor noise
+.DS_Store
+.idea/
+.vscode/
+
+# Trained weights & raw datasets — too large for git, regenerated via ml-training
 *.onnx
 *.pt
 *.pth
@@ -16,20 +26,15 @@ dist/
 **/data/
 ml-training/echonet_data/
 
-app/cardiosense.db
-app/static_uploads/
-__pycache__/
-*.pyc
-venv/
-.env
+# Runtime app data
+**/cardiosense.db
+**/static_uploads/
 
-ml-inference/app/cardiosense.db
-ml-inference/app/static_uploads/
-__pycache__/
-*.pyc
-venv/
-.env
+# Large demo/test media, already-shared archives
 *.mp4
 test_overlay*.png
 frontend.zip
 ml-training/vessel_analysis.zip
+
+# Local scratch outputs
+Claude outputs/
