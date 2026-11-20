@@ -19,7 +19,7 @@ Arterion (built as **CardioSense**) is a full-stack cardiac AI platform: a FastA
 |---|---|---|
 | ![Home page](docs/screenshots/home.png) | ![Login page](docs/screenshots/login.png) | ![Scan upload page](docs/screenshots/scan.png) |
 
-The frontend talks to a single FastAPI service over REST. Each cardiac problem statement is its own router, loading its own ONNX model from `ml-inference/app/<problem_statement>/weights/`. Scans and user data persist to a local SQLite database; trained weights are produced separately in `ml-training/` and exported as ONNX for inference.
+The frontend talks to a single FastAPI service over REST. Each cardiac problem statement is its own router, loading its own ONNX model from. Scans and user data persist to a local SQLite database; trained weights are produced separately in `ml-training/` and exported as ONNX for inference.
 
 ## Features
 
