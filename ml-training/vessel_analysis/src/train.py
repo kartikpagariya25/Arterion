@@ -22,7 +22,8 @@ def evaluate_loader(model, loader, device):
     return sum(scores) / len(scores)
 
 
-def train(task_key: str, epochs: int = 50, batch_size: int = 8, patience: int = 7):
+def train(task_key: str, epochs: int = 50, batch_size: int = 8, patience: int = 7, lr: float = 1e-4,
+          init_from: str = None, tag: str = None, workers: int = 2):
     torch.manual_seed(SEED)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"device: {device}", flush=True)
@@ -31,18 +32,21 @@ def train(task_key: str, epochs: int = 50, batch_size: int = 8, patience: int = 
     train_set = SegmentationDataset(task, "train")
     val_set = SegmentationDataset(task, "val")
 
-    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=2, pin_memory=True)
-    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
+    train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=workers, pin_memory=True)
+    val_loader = DataLoader(val_set, batch_size=batch_size, shuffle=False, num_workers=workers, pin_memory=True)
 
     model = VesselUNet().to(device)
+    if init_from:
+        model.load_state_dict(torch.load(init_from, map_location=device))
+        print(f"initialised from {init_from}", flush=True)
     criterion = CombinedLoss()
-    optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4, weight_decay=1e-4)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=1e-4)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
     scaler = torch.amp.GradScaler("cuda", enabled=(device.type == "cuda"))
 
     best_dice = -1.0
     patience_counter = 0
-    model_path = os.path.join(ARTIFACTS_DIR, f"{task_key}_model.pt")
+    model_path = os.path.join(ARTIFACTS_DIR, f"{tag or task_key}_model.pt")
 
     for epoch in range(1, epochs + 1):
         model.train()
@@ -84,5 +88,11 @@ if __name__ == "__main__":
     parser.add_argument("--task", choices=["vessel", "stenosis"], required=True)
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--patience", type=int, default=7)
+    parser.add_argument("--lr", type=float, default=1e-4)
+    parser.add_argument("--init-from", default=None, help="checkpoint to start from (e.g. the vessel model for stenosis)")
+    parser.add_argument("--tag", default=None, help="save as <tag>_model.pt instead of <task>_model.pt")
+    parser.add_argument("--workers", type=int, default=2)
     args = parser.parse_args()
-    train(args.task, epochs=args.epochs, batch_size=args.batch_size)
+    train(args.task, epochs=args.epochs, batch_size=args.batch_size, patience=args.patience, lr=args.lr,
+          init_from=args.init_from, tag=args.tag, workers=args.workers)

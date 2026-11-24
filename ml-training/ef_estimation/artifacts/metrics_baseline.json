@@ -1,0 +1,12 @@
+{
+  "task": "ef_estimation",
+  "test_set_size": 1277,
+  "mae": 5.128,
+  "rmse": 6.954,
+  "r2": 0.6764,
+  "model": {
+    "name": "R(2+1)D-18 EF regressor",
+    "params": 31300638
+  },
+  "generated_at": "2026-09-25T21:13:21.103401+00:00"
+}

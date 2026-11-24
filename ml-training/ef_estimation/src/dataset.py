@@ -36,18 +36,37 @@ def _read_video(path: str) -> np.ndarray:
     return np.stack(frames)
 
 
-def _sample_clip(video: np.ndarray, clip_length: int, train: bool) -> np.ndarray:
+def window_starts(n: int, clip_length: int, period: int, k: int) -> list:
+    """Start indices of up to k evenly spread windows; a window spans (clip_length-1)*period+1 frames."""
+    span = (clip_length - 1) * period + 1
+    if n <= span:
+        return [0]
+    return sorted({int(round(x)) for x in np.linspace(0, n - span, k)})
+
+
+def _clip_at(video: np.ndarray, start: int, clip_length: int, period: int) -> np.ndarray:
     n = video.shape[0]
-    if n <= clip_length:
-        indices = list(range(n)) + [n - 1] * (clip_length - n)
+    return video[[min(start + i * period, n - 1) for i in range(clip_length)]]  # pad short videos with the last frame
+
+
+def _sample_clip(video: np.ndarray, clip_length: int, train: bool, period: int = 1) -> np.ndarray:
+    n = video.shape[0]
+    span = (clip_length - 1) * period + 1
+    if n <= span:
+        start = 0
     else:
-        start = np.random.randint(0, n - clip_length + 1) if train else (n - clip_length) // 2
-        indices = list(range(start, start + clip_length))
-    return video[indices]
+        start = np.random.randint(0, n - span + 1) if train else (n - span) // 2
+    return _clip_at(video, start, clip_length, period)
+
+
+def to_tensor(clip: np.ndarray) -> np.ndarray:
+    clip = (clip.astype(np.float32) / 255.0 - KINETICS_MEAN) / KINETICS_STD
+    return clip.transpose(3, 0, 1, 2)
 
 
 class EFDataset(Dataset):
-    def __init__(self, split: str):
+    def __init__(self, split: str, period: int = 1):
+        self.period = period
         self.split = split.upper()
         self.df = FILE_LIST[FILE_LIST["Split"] == self.split].reset_index(drop=True)
         self.train = self.split == "TRAIN"
@@ -55,19 +74,16 @@ class EFDataset(Dataset):
     def __len__(self):
         return len(self.df)
 
-    def __getitem__(self, idx):
+    def load_video(self, idx):
         row = self.df.iloc[idx]
-        video_path = os.path.join(VIDEOS_DIR, f"{row['FileName']}.avi")
-        video = _read_video(video_path)
-
+        video = _read_video(os.path.join(VIDEOS_DIR, f"{row['FileName']}.avi"))
         if video.shape[1] != FRAME_SIZE or video.shape[2] != FRAME_SIZE:
             video = np.stack([cv2.resize(f, (FRAME_SIZE, FRAME_SIZE)) for f in video])
+        return video, float(row["EF"]) / 100.0
 
-        clip = _sample_clip(video, CLIP_LENGTH, self.train)
-        clip = clip.astype(np.float32) / 255.0
-        clip = (clip - KINETICS_MEAN) / KINETICS_STD
-        clip = clip.transpose(3, 0, 1, 2)
-
-        ef = float(row["EF"]) / 100.0
+    def __getitem__(self, idx):
+        video, ef = self.load_video(idx)
+        clip = to_tensor(_sample_clip(video, CLIP_LENGTH, self.train, self.period))
+        row = self.df.iloc[idx]
 
         return torch.from_numpy(clip).float(), torch.tensor(ef, dtype=torch.float32)
