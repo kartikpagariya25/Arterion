@@ -1,0 +1,18 @@
+epoch 1 loss 0.5482 val_bacc 0.8904 val_auroc 0.9687 20s
+epoch 2 loss 0.3816 val_bacc 0.9026 val_auroc 0.9770 18s
+epoch 3 loss 0.3532 val_bacc 0.9420 val_auroc 0.9887 18s
+epoch 4 loss 0.2612 val_bacc 0.9552 val_auroc 0.9923 16s
+epoch 5 loss 0.3095 val_bacc 0.9615 val_auroc 0.9890 16s
+epoch 6 loss 0.2370 val_bacc 0.9084 val_auroc 0.9790 16s
+epoch 7 loss 0.2586 val_bacc 0.9484 val_auroc 0.9837 16s
+epoch 8 loss 0.2396 val_bacc 0.9415 val_auroc 0.9873 11s
+epoch 9 loss 0.2137 val_bacc 0.9684 val_auroc 0.9903 10s
+epoch 10 loss 0.2147 val_bacc 0.9284 val_auroc 0.9897 12s
+epoch 11 loss 0.2085 val_bacc 0.9484 val_auroc 0.9930 13s
+epoch 12 loss 0.1947 val_bacc 0.9489 val_auroc 0.9850 13s
+epoch 13 loss 0.2061 val_bacc 0.9479 val_auroc 0.9880 13s
+epoch 14 loss 0.1847 val_bacc 0.9620 val_auroc 0.9887 15s
+epoch 15 loss 0.1825 val_bacc 0.9557 val_auroc 0.9873 13s
+epoch 16 loss 0.1787 val_bacc 0.9552 val_auroc 0.9893 13s
+early stop
+best val balanced accuracy 0.9683544303797469

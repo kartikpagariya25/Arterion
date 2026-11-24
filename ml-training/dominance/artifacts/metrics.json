@@ -1,0 +1,29 @@
+{
+  "task": "coronary_dominance",
+  "classes": [
+    "right",
+    "left"
+  ],
+  "test_size": 117,
+  "auroc": 0.9963,
+  "balanced_accuracy": 0.961,
+  "accuracy": 0.9658,
+  "sensitivity_left": 0.9474,
+  "specificity_right": 0.9747,
+  "confusion_matrix": [
+    [
+      77,
+      2
+    ],
+    [
+      2,
+      36
+    ]
+  ],
+  "model": {
+    "name": "ResNet-18 frame encoder + view embedding + study mean",
+    "params": 11246594
+  },
+  "dataset": "CoronaryDominance main_normal (study-level 70/15/15 split, seed 42)",
+  "generated_at": "2026-11-24T12:45:08.269182+00:00"
+}
