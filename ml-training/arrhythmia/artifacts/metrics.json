@@ -9,77 +9,149 @@
   "inter_patient": {
     "per_class": {
       "N": {
-        "sensitivity": 0.9955,
-        "ppv": 0.9854,
-        "f1": 0.9904,
-        "support": 2237
+        "sensitivity": 0.9325,
+        "ppv": 0.9622,
+        "f1": 0.9471,
+        "support": 44240
       },
       "S": {
-        "sensitivity": 0.0,
-        "ppv": 0.0,
-        "f1": 0.0,
-        "support": 33
+        "sensitivity": 0.2384,
+        "ppv": 0.1898,
+        "f1": 0.2113,
+        "support": 1837
       },
       "V": {
-        "sensitivity": 1.0,
-        "ppv": 0.0909,
-        "f1": 0.1667,
-        "support": 1
+        "sensitivity": 0.9425,
+        "ppv": 0.8247,
+        "f1": 0.8797,
+        "support": 3220
       },
       "F": {
-        "sensitivity": 0.0,
-        "ppv": 0.0,
-        "f1": 0.0,
-        "support": 0
+        "sensitivity": 0.0284,
+        "ppv": 0.0132,
+        "f1": 0.018,
+        "support": 388
       },
       "Q": {
         "sensitivity": 0.0,
         "ppv": 0.0,
         "f1": 0.0,
-        "support": 0
+        "support": 7
       }
     },
-    "macro_f1": 0.2314,
-    "accuracy": 0.9811,
+    "macro_f1": 0.4112,
+    "accuracy": 0.9003,
     "confusion_matrix": [
       [
-        2227,
-        0,
-        10,
-        0,
+        41252,
+        1827,
+        375,
+        785,
+        1
+      ],
+      [
+        1137,
+        438,
+        244,
+        17,
+        1
+      ],
+      [
+        126,
+        41,
+        3035,
+        18,
         0
       ],
       [
-        33,
-        0,
-        0,
-        0,
+        352,
+        2,
+        23,
+        11,
         0
       ],
       [
+        4,
         0,
-        0,
-        1,
-        0,
-        0
-      ],
-      [
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      [
-        0,
-        0,
-        0,
+        3,
         0,
         0
       ]
     ]
   },
-  "intra_patient": null,
+  "intra_patient": {
+    "per_class": {
+      "N": {
+        "sensitivity": 0.9862,
+        "ppv": 0.9967,
+        "f1": 0.9914,
+        "support": 90088
+      },
+      "S": {
+        "sensitivity": 0.9277,
+        "ppv": 0.7832,
+        "f1": 0.8494,
+        "support": 2781
+      },
+      "V": {
+        "sensitivity": 0.9809,
+        "ppv": 0.9389,
+        "f1": 0.9595,
+        "support": 7008
+      },
+      "F": {
+        "sensitivity": 0.8267,
+        "ppv": 0.8522,
+        "f1": 0.8392,
+        "support": 802
+      },
+      "Q": {
+        "sensitivity": 0.8667,
+        "ppv": 0.0818,
+        "f1": 0.1494,
+        "support": 15
+      }
+    },
+    "macro_f1": 0.7578,
+    "accuracy": 0.9829,
+    "confusion_matrix": [
+      [
+        88845,
+        687,
+        376,
+        57,
+        123
+      ],
+      [
+        174,
+        2580,
+        23,
+        0,
+        4
+      ],
+      [
+        32,
+        26,
+        6874,
+        58,
+        18
+      ],
+      [
+        90,
+        1,
+        47,
+        663,
+        1
+      ],
+      [
+        1,
+        0,
+        1,
+        0,
+        13
+      ]
+    ]
+  },
   "dataset": {
     "name": "MIT-BIH Arrhythmia Database",
     "excluded_records": [
@@ -94,5 +166,5 @@
     "params": 498453,
     "input": "256-sample beat @360 Hz + 4 RR features"
   },
-  "generated_at": "2026-09-24T17:55:44.328350Z"
+  "generated_at": "2026-11-24T12:50:48.834818+00:00"
 }

@@ -49,3 +49,25 @@ def test_alerts_do_not_merge_beyond_5s():
     alerts = detect_alerts(beats)
     vt_alerts = [a for a in alerts if a["type"] == "VT"]
     assert len(vt_alerts) == 2
+
+
+def _beats(times, v_idx=()):
+    return [{"time": t, "class": "V" if i in v_idx else "N"} for i, t in enumerate(times)]
+
+
+def test_pvcs_in_regular_sinus_rhythm_are_not_afib():
+    v_idx = {6, 14, 22}
+    times = [0.85 * i - (0.25 if i in v_idx else 0.0) for i in range(32)]  # premature V, then compensatory pause
+    types = [a["type"] for a in detect_alerts(_beats(times, v_idx))]
+    assert "AFIB" not in types
+
+
+def test_irregularly_irregular_normal_beats_still_flag_afib():
+    import random
+
+    random.seed(3)
+    t, times = 0.0, []
+    for _ in range(40):
+        t += random.uniform(0.45, 1.25)
+        times.append(t)
+    assert "AFIB" in [a["type"] for a in detect_alerts(_beats(times))]

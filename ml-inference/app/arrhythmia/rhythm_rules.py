@@ -94,16 +94,26 @@ def _rate_alerts(times, window_sec=10.0):
     return alerts
 
 
-def _afib_alerts(times, window_beats=10, cv_threshold=0.15):
+def _afib_alerts(times, classes, window_beats=10, cv_threshold=0.15):
+    """Irregularly irregular rhythm among normally conducted beats.
+
+    Intervals touching an ectopic (non-N) beat are irregular by themselves, so any window that
+    contains one is skipped; otherwise PVCs in sinus rhythm would be reported as AFib.
+    """
     alerts = []
     if len(times) < window_beats + 1:
         return alerts
 
     rrs = [times[i] - times[i - 1] for i in range(1, len(times))]
+    clean = [classes[i] == "N" and classes[i - 1] == "N" for i in range(1, len(times))]
     positive_streak = 0
     streak_start = None
 
     for i in range(len(rrs) - window_beats + 1):
+        if not all(clean[i:i + window_beats]):
+            positive_streak = 0
+            streak_start = None
+            continue
         segment = rrs[i:i + window_beats]
         mean_rr = sum(segment) / len(segment)
         variance = sum((x - mean_rr) ** 2 for x in segment) / len(segment)
@@ -149,6 +159,6 @@ def detect_alerts(beats: list[dict]) -> list[dict]:
     alerts += _bigeminy_alerts(times, classes)
     alerts += _trigeminy_alerts(times, classes)
     alerts += _rate_alerts(times)
-    alerts += _afib_alerts(times)
+    alerts += _afib_alerts(times, classes)
 
     return _merge_alerts(alerts)
