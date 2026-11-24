@@ -45,6 +45,18 @@ The frontend talks to a single FastAPI service over REST. Each cardiac problem s
 | Frontend | Static HTML/CSS/vanilla JS, served via nginx in production |
 | Deployment | Docker, Docker Compose |
 
+## Standalone repos
+
+Each model also lives in its own self-contained repo (frontend + API + training code):
+
+| Folder | Standalone repo | Status / held-out result |
+|---|---|---|
+| `ml-training/vessel_analysis/` | [arterion-vessel-analysis](https://github.com/kartikpagariya25/arterion-vessel-analysis) | Trained — vessel Dice 0.774, stenosis Dice 0.594 |
+| `ml-training/ef_estimation/` | [arterion-ef-estimation](https://github.com/kartikpagariya25/arterion-ef-estimation) | Trained — MAE 4.61, R² 0.739 |
+| `ml-training/lv_outline/` | [arterion-lv-outline](https://github.com/kartikpagariya25/arterion-lv-outline) | Trained — Dice 0.925 |
+| `ml-training/dominance/` | [arterion-coronary-dominance](https://github.com/kartikpagariya25/arterion-coronary-dominance) | Trained — AUROC 0.996, balanced accuracy 0.961 (117 test studies) |
+| `ml-training/arrhythmia/` | [arterion-arrhythmia](https://github.com/kartikpagariya25/arterion-arrhythmia) | Trained — full MIT-BIH DS2: V sensitivity 0.943, S sensitivity 0.238, macro-F1 0.411 |
+
 ## Quick Start
 
 ### Option A — Docker Compose (fastest)
